@@ -126,7 +126,7 @@ export class ConversationPageComponent extends BasePage implements OnInit, OnDes
 
     this.startTime = Date.now();
     window.onbeforeunload = () => this.ngOnDestroy();
-    this.selfId = this.storageService?.getObjectFromLocalStorage('user_id', '');
+    this.selfId = this.storageService?.getFromLocalStorage('user_id') ?? '';
     this.refresh();
   }
 

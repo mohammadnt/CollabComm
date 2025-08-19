@@ -245,9 +245,9 @@ export class ChatPageComponent extends BasePage implements OnInit, AfterViewInit
     this.startTime = Date.now();
     window.onbeforeunload = () => this.ngOnDestroy();
 
-    this.firstName = this.storageService?.getObjectFromLocalStorage('first_name', '') ?? 'Firstname';
-    this.lastName = this.storageService?.getObjectFromLocalStorage('last_name', '') ?? 'Lastname';
-    this.selfId = this.storageService?.getObjectFromLocalStorage('user_id', '');
+    this.firstName = this.storageService?.getFromLocalStorage('first_name') ?? '';
+    this.lastName = this.storageService?.getFromLocalStorage('last_name') ?? '';
+    this.selfId = this.storageService?.getFromLocalStorage('user_id') ?? undefined;
 
 
     this.loadData();

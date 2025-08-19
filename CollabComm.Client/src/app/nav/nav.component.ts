@@ -98,8 +98,8 @@ export class NavComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   refreshName() {
-    this.appManager.firstName = this.storageService?.getObjectFromLocalStorage('first_name', '') ?? '';
-    this.appManager.lastName = this.storageService?.getObjectFromLocalStorage('last_name', '') ?? 'Lastname';
+    this.appManager.firstName = this.storageService?.getFromLocalStorage('first_name') ?? '';
+    this.appManager.lastName = this.storageService?.getFromLocalStorage('last_name') ?? '';
 
     this.isSubscribedToNotifications = this.storageService?.getObjectFromLocalStorage('subscriptions', false) ?? false;
     if (!('Notification' in window) || Notification.permission !== 'granted') {

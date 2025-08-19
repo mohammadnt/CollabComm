@@ -158,9 +158,9 @@ export class LoginComponent extends BasePage implements OnInit, AfterViewInit, O
           }
 
           this.loginService.checkIsLogin();
-          this.storageService?.setObjectInLocalStorage('first_name', d.data.user.first_name);
-          this.storageService?.setObjectInLocalStorage('last_name', d.data.user.last_name);
-          this.storageService?.setObjectInLocalStorage('user_id', d.data.user.id);
+          this.storageService?.setInLocalStorage('first_name', d.data.user.first_name);
+          this.storageService?.setInLocalStorage('last_name', d.data.user.last_name);
+          this.storageService?.setInLocalStorage('user_id', d.data.user.id);
 
           this.loginService.notifyChanged();
           this.router.navigateByUrl(this.returnUrl);
