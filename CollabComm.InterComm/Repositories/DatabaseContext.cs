@@ -14,6 +14,7 @@ public class DatabaseContext : IdentityDbContext
     public virtual DbSet<Conversation> conversation { get; set; }
     public virtual DbSet<UserGroup> user_group { get; set; }
     public virtual DbSet<Contact> contact { get; set; }
+    public virtual DbSet<PublicUserMedia> public_user_media { get; set; }
         
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
@@ -51,6 +52,9 @@ public class DatabaseContext : IdentityDbContext
             .Property(e => e.creation_date)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
         modelBuilder.Entity<Contact>()
+            .Property(e => e.creation_date)
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+        modelBuilder.Entity<PublicUserMedia>()
             .Property(e => e.creation_date)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
     }
