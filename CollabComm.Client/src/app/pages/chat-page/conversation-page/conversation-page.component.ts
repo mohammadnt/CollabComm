@@ -75,7 +75,7 @@ export class ConversationPageComponent extends BasePage implements OnInit, OnDes
   UserType = UserType;
   groupSenderUsers: CollabUserInfo[] = [];
   selfId: string | undefined;
-  isGroupChatOnly = true;
+  isGroupChatOnly = false;
   private startTime!: number;
 
   forwardMessage: MessageInfo | undefined;

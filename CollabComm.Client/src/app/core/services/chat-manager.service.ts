@@ -7,7 +7,7 @@ import {StorageService} from './storage.service';
   providedIn: 'root'
 })
 export class ChatManagerService {
-  public isGroupChatOnly = true;
+  public isGroupChatOnly = false;
   public conversationScrollTopValue: number | undefined;
   public chatScrollTopValues: Dictionary<number | undefined> = {};
   public totalBadge = 0;

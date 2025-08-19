@@ -2,7 +2,7 @@
 
   <h3 class="view-title">Chats</h3>
   <div class="d-flex buttons-wrapper mb-2">
-    <div class="tab-button text-center py-2"
+    <div class="order-2 tab-button text-center py-2"
          matRipple [matRippleColor]="'rgba(0, 0, 0, .14)'"
          [ngClass]="{'active' : isGroupChatOnly}" (click)="setGroupChatOnly(true)">
       <div>Groups</div>
@@ -10,7 +10,7 @@
         {{ groupsUnreadCount }}
       </div>
     </div>
-    <div class="tab-button text-center py-2"
+    <div class="order-1 tab-button text-center py-2"
          matRipple [matRippleColor]="'rgba(0, 0, 0, .14)'"
          [ngClass]="{'active' : !isGroupChatOnly}" (click)="setGroupChatOnly(false)">
       <div>Users</div>
