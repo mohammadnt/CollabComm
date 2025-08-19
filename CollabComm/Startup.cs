@@ -54,6 +54,7 @@ public class Startup : BaseStartup
         services.AddSingleton<IProcessMessage, ProcessMessage>();
         services.AddScoped<IPushService, PushService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IMainService, MainService>();
         services.AddSingleton<IWebsocketHandler, WebsocketHandler>();
 
         // inject counter and rules stores
