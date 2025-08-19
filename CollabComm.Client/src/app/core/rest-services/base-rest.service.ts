@@ -98,15 +98,6 @@ export class BaseRestService {
     );
   }
 
-  getPublicMyData(userAgent: string, ewanoSessionId: string | undefined, deviceId: string | undefined): Observable<any> {
-    const model = {user_agent: userAgent, ewano_session_id: ewanoSessionId, device_id: deviceId};
-    return this.http.post<BaseResult<any>>(`${endpoint()}public/MyData`, model).pipe(
-      catchError((err: any, caught: Observable<any>) => {
-        return this.handleError(err);
-      })
-    );
-  }
-
   addChatMedia(file: File, userId: string | null, type: number, fileName: string): Observable<any> {
     const headers = new HttpHeaders({
       'ngsw-bypass': 'true'
