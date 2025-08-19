@@ -81,6 +81,7 @@ public class UserController : BaseController
             request.store_id, request.user_agent, request.build_number, _siteConfig.CacheCleared,
             cancellationToken);
 
-        return new ResultSet<object>(new { is_cache_cleared });
+        var user = await _userService.GetUser(App.UserIdGuid, cancellationToken);
+        return new ResultSet<object>(new { is_cache_cleared, user });
     }
 }
