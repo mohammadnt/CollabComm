@@ -12,7 +12,7 @@ namespace CollabComm.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("api/[controller]/[action]")]
+[Route("api/[controller]/[action]/{id?}")]
 public class MediaController : BaseController
 {
     private readonly IMainService _mainService;
