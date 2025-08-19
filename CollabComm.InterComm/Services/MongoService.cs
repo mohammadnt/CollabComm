@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace CollabComm.InterComm.Services;
 
-public interface IMongoServices
+public interface IMongoService
 {
     Task<List<ChatMessageInfo>> GetMessagesByIds(Guid user_id, List<Guid> gps, List<string> ids,
         CancellationToken cancellationToken);
@@ -35,13 +35,13 @@ public interface IMongoServices
     Task<ChatMedia> CloneChatMedia(string id, Guid from_id, Guid to_id);
 }
 
-public class MongoServices : IMongoServices
+public class MongoService : IMongoService
 {
     private readonly IMongoCollection<ChatMessage> _messageCollection;
     private readonly IMongoCollection<ChatMedia> _chatMediaCollection;
     private readonly IMapper _mapper;
 
-    public MongoServices(
+    public MongoService(
         IOptions<CollabCommMongoSettings> collabCommMongoSettings,
         IMapper mapper)
     {

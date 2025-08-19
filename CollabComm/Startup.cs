@@ -35,7 +35,6 @@ public class Startup : BaseStartup
 
         services.Configure<CollabCommMongoSettings>(
         Configuration.GetSection("CollabCommMongoSettings"));
-        services.AddSingleton<MongoServices>();
         
         // services.AddSingleton<IProcessMessage, ProcessMessage>();
         // services.AddSingleton<IWebsocketHandler, WebsocketHandler>();
@@ -51,7 +50,7 @@ public class Startup : BaseStartup
         services.AddScoped<PushServiceClient>();
 
         services.AddScoped<IChatService, ChatService>();
-        services.AddScoped<IMongoServices, MongoServices>();
+        services.AddScoped<IMongoService, MongoService>();
         services.AddSingleton<IProcessMessage, ProcessMessage>();
         services.AddScoped<IPushService, PushService>();
         services.AddScoped<IUserService, UserService>();

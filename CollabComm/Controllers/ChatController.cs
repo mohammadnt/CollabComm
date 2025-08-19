@@ -23,7 +23,7 @@ public class ChatController : BaseController
 {
     private readonly string _siteName;
     private readonly IMapper _mapper;
-    private readonly IMongoServices _mongoServices;
+    private readonly IMongoService _mongoService;
     private readonly IWebsocketHandler _websocketHandler;
     private readonly IUserService _userService;
     private readonly IChatService _chatService;
@@ -34,12 +34,12 @@ public class ChatController : BaseController
         IUserService userService,
         IWebHostEnvironment hostingEnvironment,
         IMapper mapper,
-        IMongoServices mongoServices,
+        IMongoService mongoService,
         IWebsocketHandler websocketHandler,
         IChatService chatService) : base(app)
     {
         _mapper = mapper;
-        _mongoServices = mongoServices;
+        _mongoService = mongoService;
         _websocketHandler = websocketHandler;
         _userService = userService;
         _chatService = chatService;
@@ -122,7 +122,7 @@ public class ChatController : BaseController
         var myGroup = await _chatService.MyGroups(App.UserIdGuid, cancellationToken);
         var gpIds = myGroup.Select(s => s.group_id);
         var messages =
-            await _mongoServices.GetMessagesByIds(App.UserIdGuid, gpIds.ToList(), request.ids,
+            await _mongoService.GetMessagesByIds(App.UserIdGuid, gpIds.ToList(), request.ids,
                 cancellationToken);
         return new ResultSet<object>(messages);
     }
@@ -133,23 +133,23 @@ public class ChatController : BaseController
     {
         var selfId = App.UserIdGuid;
         var user = await _userService.GetUserInfo(request.id, cancellationToken);
-        var message = await _mongoServices.GetMessageById(request.title, cancellationToken);
+        var message = await _mongoService.GetMessageById(request.title, cancellationToken);
         var fromId = user.type == (int)UserType.Group ? user.id : user.id;
-        var pairMessage = await _mongoServices.GetMessageByPairId(user.type == (int)UserType.Group, fromId,
+        var pairMessage = await _mongoService.GetMessageByPairId(user.type == (int)UserType.Group, fromId,
             request.title, cancellationToken);
         if (user.type == (int)UserType.User)
         {
             if (message.from_id != selfId && message.to_id != selfId)
                 return new ResultSet<object>() { code = ResponseCodes.Forbidden };
 
-            await _mongoServices.DeleteMessage(selfId, request.id, request.title,
+            await _mongoService.DeleteMessage(selfId, request.id, request.title,
                 cancellationToken);
 
             var conv2 = await _chatService.GetConversation(selfId, request.id, cancellationToken);
             if (conv2.last_message_id == request.title)
             {
                 var lastmsg =
-                    await _mongoServices.GetOneMessageByFromIdAndToId(false, selfId, request.id, cancellationToken);
+                    await _mongoService.GetOneMessageByFromIdAndToId(false, selfId, request.id, cancellationToken);
                 await _chatService.UpdateConversationLastMessage(selfId, request.id, lastmsg, cancellationToken);
             }
 
@@ -162,13 +162,13 @@ public class ChatController : BaseController
 
             if (message.from_id != message.to_id)
             {
-                await _mongoServices.DeleteMessage(request.id, selfId, pairMessage.id,
+                await _mongoService.DeleteMessage(request.id, selfId, pairMessage.id,
                     cancellationToken);
                 var conv1 = await _chatService.GetConversation(request.id, selfId, cancellationToken);
                 if (conv1.last_message_id == pairMessage.id)
                 {
                     var lastmsg =
-                        await _mongoServices.GetOneMessageByFromIdAndToId(false, request.id, selfId, cancellationToken);
+                        await _mongoService.GetOneMessageByFromIdAndToId(false, request.id, selfId, cancellationToken);
                     await _chatService.UpdateConversationLastMessage(request.id, selfId, lastmsg, cancellationToken);
                 }
 
@@ -185,11 +185,11 @@ public class ChatController : BaseController
                 return new ResultSet<object>(false) { code = ResponseCodes.Forbidden };
             var conv1 = await _chatService.GetConversation(request.id, request.id, cancellationToken);
 
-            await _mongoServices.DeleteMessage(request.id, selfId, request.title,
+            await _mongoService.DeleteMessage(request.id, selfId, request.title,
                 cancellationToken);
             if (conv1.last_message_id == request.title)
             {
-                var lastmsg = await _mongoServices.GetOneMessageByFromId(true, request.id, cancellationToken);
+                var lastmsg = await _mongoService.GetOneMessageByFromId(true, request.id, cancellationToken);
                 await _chatService.UpdateConversationLastMessage(request.id, request.id, lastmsg, cancellationToken);
             }
 
@@ -226,7 +226,7 @@ public class ChatController : BaseController
             var conv = await _chatService.GetConversation(request.user_id, request.user_id, cancellationToken);
             if (conv.deleted)
                 return new ResultSet<object>() { code = ResponseCodes.Forbidden };
-            messages = await _mongoServices.GetMessagesByFromId(true, request.user_id, request.counter,
+            messages = await _mongoService.GetMessagesByFromId(true, request.user_id, request.counter,
                 request.is_previous,
                 50, cancellationToken);
         }
@@ -235,7 +235,7 @@ public class ChatController : BaseController
             var conv = await _chatService.GetConversation(App.UserIdGuid, request.user_id, cancellationToken);
             if (conv != null && conv.deleted)
                 return new ResultSet<object>() { code = ResponseCodes.Forbidden };
-            messages = await _mongoServices.GetMessagesByFromIdAndToId(false, App.UserIdGuid, request.user_id,
+            messages = await _mongoService.GetMessagesByFromIdAndToId(false, App.UserIdGuid, request.user_id,
                 request.counter, request.is_previous, 50, cancellationToken);
         }
 
@@ -247,7 +247,7 @@ public class ChatController : BaseController
     public async Task<ResultSet<object>> MessagesByReplyId([FromBody] GetMessagesByCounterRequestDTO request,
         CancellationToken cancellationToken = default)
     {
-        var message = await _mongoServices.GetMessageById(request.reply_id, cancellationToken);
+        var message = await _mongoService.GetMessageById(request.reply_id, cancellationToken);
         var user = await _userService.GetUserInfo(request.user_id, cancellationToken);
         Guid fromId = user.type == (int)UserType.Group ? request.user_id : App.UserIdGuid;
         Guid toId = user.type == (int)UserType.Group ? request.user_id : App.UserIdGuid;
@@ -257,10 +257,10 @@ public class ChatController : BaseController
             var isMember = await _chatService.IsMemberOfGroup(request.user_id, App.UserIdGuid, cancellationToken);
             if (!isMember)
                 return new ResultSet<object>() { code = ResponseCodes.Forbidden };
-            var prvMessages = await _mongoServices.GetMessagesByFromId(true, request.user_id,
+            var prvMessages = await _mongoService.GetMessagesByFromId(true, request.user_id,
                 message.conversation_counter, true, 19,
                 cancellationToken);
-            var nextMessages = await _mongoServices.GetMessagesByFromId(true, request.user_id,
+            var nextMessages = await _mongoService.GetMessagesByFromId(true, request.user_id,
                 message.conversation_counter, false, 30,
                 cancellationToken);
             messages.AddRange(prvMessages);
@@ -269,10 +269,10 @@ public class ChatController : BaseController
         }
         else
         {
-            var prvMessages = await _mongoServices.GetMessagesByFromIdAndToId(false, App.UserIdGuid,
+            var prvMessages = await _mongoService.GetMessagesByFromIdAndToId(false, App.UserIdGuid,
                 request.user_id,
                 message.conversation_counter, true, 19, cancellationToken);
-            var nextMessages = await _mongoServices.GetMessagesByFromIdAndToId(false, App.UserIdGuid,
+            var nextMessages = await _mongoService.GetMessagesByFromIdAndToId(false, App.UserIdGuid,
                 request.user_id,
                 message.conversation_counter, false, 30, cancellationToken);
             messages.AddRange(prvMessages);
@@ -347,15 +347,15 @@ public class ChatController : BaseController
                 ChatMessageInfo pairMessage;
                 if (request.id != null)
                 {
-                    var msg = await _mongoServices.GetMessageById(request.id, cancellationToken);
+                    var msg = await _mongoService.GetMessageById(request.id, cancellationToken);
                     if (msg.pair_id != null)
                     {
-                        pairMessage = await _mongoServices.GetMessageById(msg.pair_id, cancellationToken);
+                        pairMessage = await _mongoService.GetMessageById(msg.pair_id, cancellationToken);
                         pairMessageCounter = pairMessage.conversation_counter;
                     }
                     else
                     {
-                        pairMessage = await _mongoServices.GetMessageByPairId(false,
+                        pairMessage = await _mongoService.GetMessageByPairId(false,
                             request.user_id, request.id, cancellationToken);
                         pairMessageCounter = pairMessage.conversation_counter;
                     }
@@ -388,7 +388,7 @@ public class ChatController : BaseController
 
 
         string mediaId = null;
-        var msg = await _mongoServices.GetMessageById(id, cancellationToken);
+        var msg = await _mongoService.GetMessageById(id, cancellationToken);
         if (msg == null || msg.deleted == true || msg.media_id == null)
             return null;
         if (is_group)
@@ -438,7 +438,7 @@ public class ChatController : BaseController
         CancellationToken cancellationToken = default)
     {
         string mediaId = null;
-        var msg = await _mongoServices.GetMessageById(id, cancellationToken);
+        var msg = await _mongoService.GetMessageById(id, cancellationToken);
         if (msg == null || msg.deleted == true || msg.media_id == null)
             return null;
         if (is_group)

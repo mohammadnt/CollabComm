@@ -69,7 +69,7 @@ public class ChatService : IChatService
 {
     private readonly IMapper _mapper;
     private readonly ISqlRepository _sqlRepository;
-    private readonly IMongoServices _mongoServices;
+    private readonly IMongoService _mongoService;
     private readonly IUserService _userService;
     private readonly DatabaseContext _dbContext;
 
@@ -79,12 +79,12 @@ public class ChatService : IChatService
         ISqlRepository sqlRepository,
         DatabaseContext dbContext,
         IUserService userService,
-        IMongoServices mongoServices)
+        IMongoService mongoService)
     {
         _mapper = mapper;
         _sqlRepository = sqlRepository;
         _dbContext = dbContext;
-        _mongoServices = mongoServices;
+        _mongoService = mongoService;
         _userService = userService;
     }
 
@@ -92,13 +92,13 @@ public class ChatService : IChatService
         CancellationToken cancellationToken)
     {
         var media = ChatMedia.Generate(from_id, to_id, type, mimeType, path);
-        await _mongoServices.InsertChatMedia(media);
+        await _mongoService.InsertChatMedia(media);
         return _mapper.Map<ChatMediaInfo>(media);
     }
 
     public async Task<ChatMediaInfo> GetChatMedia(string id, Guid user_id, CancellationToken cancellationToken)
     {
-        var media = await _mongoServices.GetChatMedia(id);
+        var media = await _mongoService.GetChatMedia(id);
         if (media.from_id == media.to_id)
         {
             var userGroup = await GetMyUserGroup(media.from_id, user_id, cancellationToken);
@@ -370,7 +370,7 @@ public class ChatService : IChatService
                 cancellationToken);
 
         var conv = _mapper.Map<ConversationInfo>(conversation);
-        await ProcessMessage.MakeCreateGroupMessage(_mongoServices, _sqlRepository, conv.from_id, userId,
+        await ProcessMessage.MakeCreateGroupMessage(_mongoService, _sqlRepository, conv.from_id, userId,
             title, cancellationToken);
         return conv;
     }

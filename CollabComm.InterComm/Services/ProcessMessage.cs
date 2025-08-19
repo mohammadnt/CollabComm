@@ -37,7 +37,7 @@ public class ProcessMessage : IProcessMessage
             IPushService _pushService = scope.ServiceProvider.GetRequiredService<IPushService>();
             ISqlRepository sqlRepository =
                 scope.ServiceProvider.GetRequiredService<ISqlRepository>();
-            IMongoServices _mongoServices = scope.ServiceProvider.GetRequiredService<IMongoServices>();
+            IMongoService mongoService = scope.ServiceProvider.GetRequiredService<IMongoService>();
             IUserService _userService = scope.ServiceProvider.GetRequiredService<IUserService>();
             var userId = data.to_id;
             var user = await _userService.GetUserInfo(userId, cancellationToken);
@@ -48,7 +48,7 @@ public class ProcessMessage : IProcessMessage
             if (data.forward_message_id != null)
             {
                 Guid fromId, toId;
-                forwardedMessage = await _mongoServices.GetMessageById(data.forward_message_id, cancellationToken);
+                forwardedMessage = await mongoService.GetMessageById(data.forward_message_id, cancellationToken);
                 if (forwardedMessage.is_group)
                 {
                     var members = await _chatService.GetUserGroups(forwardedMessage.from_id, cancellationToken);
@@ -82,7 +82,7 @@ public class ProcessMessage : IProcessMessage
                 data.data = forwardedMessage.data;
                 if (forwardedMessage.media_id != null)
                 {
-                    var media = await _mongoServices.CloneChatMedia(forwardedMessage.media_id, fromId, toId);
+                    var media = await mongoService.CloneChatMedia(forwardedMessage.media_id, fromId, toId);
                     data.file_id = media.id;
                 }
 
@@ -103,11 +103,11 @@ public class ProcessMessage : IProcessMessage
                 string targetReplyid = null;
                 if (data.reply_id != null)
                 {
-                    var repliedMessage = await _mongoServices.GetMessageById(data.reply_id, cancellationToken);
+                    var repliedMessage = await mongoService.GetMessageById(data.reply_id, cancellationToken);
                     if (repliedMessage.pair_id == null && repliedMessage.from_id != repliedMessage.to_id)
                     {
                         var fromId = user.type == (int)UserType.Group ? user.id : user.id;
-                        var pairReplyMsg = await _mongoServices.GetMessageByPairId(user.type == (int)UserType.Group,
+                        var pairReplyMsg = await mongoService.GetMessageByPairId(user.type == (int)UserType.Group,
                             userId, data.reply_id, cancellationToken);
                         targetReplyid = pairReplyMsg.id;
                     }
@@ -132,7 +132,7 @@ public class ProcessMessage : IProcessMessage
                     conv2.last_message_counter + 1, data.reply_id, forwardedMessage?.id, forwardUserId);
 
 
-                await _mongoServices.CreateMessage(message2);
+                await mongoService.CreateMessage(message2);
 
                 await sqlRepository.UpdateByFilter<CollabUser>(s => s.id == senderId,
                     s => new { last_message_counter = s.last_message_counter + 1 }, cancellationToken);
@@ -171,7 +171,7 @@ public class ProcessMessage : IProcessMessage
                         mediaPath, user.last_message_counter + 1, false,
                         conv1.last_message_counter + 1, targetReplyid, forwardedMessage?.id, forwardUserId);
                     message1.pair_id = message2.id;
-                    await _mongoServices.CreateMessage(message1);
+                    await mongoService.CreateMessage(message1);
                     await sqlRepository.UpdateByFilter<CollabUser>(s => s.id == userId,
                         s => new { last_message_counter = s.last_message_counter + 1 }, cancellationToken);
                     await sqlRepository.UpdateByFilter<Conversation>(
@@ -216,7 +216,7 @@ public class ProcessMessage : IProcessMessage
                 var message = ChatMessage.Generate(userId, senderId, data.text, false, data.type, data.data, data.file_id,
                     mediaPath, user.last_message_counter + 1, true,
                     conv.last_message_counter + 1, data.reply_id, forwardedMessage?.id, forwardUserId);
-                await _mongoServices.CreateMessage(message);
+                await mongoService.CreateMessage(message);
                 await sqlRepository.UpdateByFilter<Conversation>(
                     s => s.from_id == userId && s.to_id == userId,
                     s => new
@@ -278,7 +278,7 @@ public class ProcessMessage : IProcessMessage
         return "Unknown message";
     }
 
-    public static async Task MakeCreateGroupMessage(IMongoServices _mongoServices,
+    public static async Task MakeCreateGroupMessage(IMongoService mongoService,
         ISqlRepository sqlRepository, Guid fromId, Guid userId, string title,
         CancellationToken cancellationToken)
     {
@@ -294,7 +294,7 @@ public class ProcessMessage : IProcessMessage
             JsonConvert.SerializeObject(data), null,
             mediaPath,
             1, true, 1, null, null, null);
-        await _mongoServices.CreateMessage(message);
+        await mongoService.CreateMessage(message);
         await sqlRepository.UpdateByFilter<CollabUser>(s => s.id == fromId,
             s => new { last_message_counter = s.last_message_counter + 1 }, cancellationToken);
         await sqlRepository.UpdateByFilter<Conversation>(s => s.from_id == fromId && s.to_id == fromId,
