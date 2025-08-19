@@ -7,7 +7,7 @@ import {ImageCompressor} from '../core/services/image-compressor';
 import {ToastrService} from 'ngx-toastr';
 import {MatDialog} from '@angular/material/dialog';
 import {AppManagerService} from '../core/services/app-manager.service';
-import {DataResponse} from '../models/UserModels';
+import {CollabUserInfo, DataResponse} from '../models/UserModels';
 import {MatMenuTrigger} from '@angular/material/menu';
 import {Subject} from 'rxjs';
 import {BasePage} from '../core/classes/base-page';
@@ -16,11 +16,12 @@ import {LoginService} from '../core/services/login.service';
 import {StorageService} from '../core/services/storage.service';
 import {TitleDialogComponent} from '../module/title-dialog/title-dialog.component';
 import {AddToHomeComponent} from '../module/add-to-home/add-to-home.component';
-import {BaseResult} from '../models/BaseResult';
+import {BaseResult, ResultStatusCode} from '../models/BaseResult';
 import {ConfirmationDialogComponent} from '../module/confirmation-dialog/confirmation-dialog.component';
 import {ImageCropperManagerComponent} from '../module/image-cropper-manager/image-cropper-manager.component';
 import {MediaType} from '../models/enums';
 import {endpoint} from '../core/cookie-utils';
+import * as uuid from 'uuid';
 
 
 @Component({
@@ -109,6 +110,40 @@ export class NavComponent extends BaseComponent implements OnInit, OnDestroy {
 
   refreshLoginStatus() {
     this.refreshName();
+    this.getMyData();
+  }
+
+  getMyData() {
+    if (!this.baseRestService.isLogin) {
+      return;
+    }
+    const userAgent = window.navigator.userAgent;
+
+    let deviceId: string | undefined;
+    deviceId = this.storageService?.getFromLocalStorage('device_id') ?? '';
+    if (!deviceId || deviceId === '') {
+      deviceId = uuid.v4();
+      this.storageService?.setInLocalStorage('device_id', deviceId);
+    }
+    this.baseRestService.getMyData(userAgent, deviceId)
+      .pipe(first())
+      .subscribe((d: BaseResult<{ is_cache_cleared: boolean, user: CollabUserInfo }>) => {
+          if (d.code === ResultStatusCode.Logout) {
+            this.logout();
+          }
+          this.storageService?.setInLocalStorage('first_name', d.data.user.first_name);
+          this.storageService?.setInLocalStorage('last_name', d.data.user.last_name);
+          this.storageService?.setInLocalStorage('user_id', d.data.user.id);
+          this.refreshName();
+
+          this.appManager.setMyData(d.data);
+          this.userData = d.data;
+          if (this.loginService.isLogin && d.data.is_cache_cleared) {
+            location.reload();
+          }
+        },
+        error => {
+        });
   }
 
   logout() {
