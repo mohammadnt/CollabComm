@@ -18,7 +18,7 @@ export enum ResultStatusCode {
   Forbidden = 12,
   WrongPassword = 13,
 
-  logout = 70,
+  Logout = 70,
   NotFound = 13,
   EmptyFile = 14,
   Redirect = 18,
