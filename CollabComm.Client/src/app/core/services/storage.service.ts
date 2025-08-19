@@ -22,8 +22,8 @@ export class StorageService {
   }
 
   getObjectFromLocalStorage<T>(name: string, defaultValue: T): T {
-    const cookie = localStorage.getItem(name);
-    return cookie ? JSON.parse(cookie) : defaultValue;
+    const o = localStorage.getItem(name);
+    return o ? JSON.parse(o) : defaultValue;
   }
 
   getArrayFromLocalStorage(name: string): any[] {
