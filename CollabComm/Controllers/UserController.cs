@@ -84,4 +84,13 @@ public class UserController : BaseController
         var user = await _userService.GetUser(App.UserIdGuid, cancellationToken);
         return new ResultSet<object>(new { is_cache_cleared, user });
     }
+    
+
+    [HttpPost]
+    public async Task<ResultSet<object>> SetProfilePhoto([FromBody] IdNullRequestDTO request,
+        CancellationToken cancellationToken = default)
+    {
+        var res = await _userService.UpdateProfilePhoto(new Guid(App.UserId), request.id, cancellationToken);
+        return new ResultSet<object>(res);
+    }
 }

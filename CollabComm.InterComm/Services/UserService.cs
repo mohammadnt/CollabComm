@@ -54,6 +54,8 @@ public interface IUserService
 
     Task<bool> UpdateSession(Guid connectionId, DateTime lastDate, string appVersion, int? storeId,
         string? user_agent, int? buildNumber, int clearedCache, CancellationToken cancellationToken);
+
+    Task<bool> UpdateProfilePhoto(Guid userId, Guid? photoId, CancellationToken cancellationToken);
 }
 
 public class UserService : IUserService
@@ -75,6 +77,14 @@ public class UserService : IUserService
         _sqlRepository = sqlRepository;
     }
 
+    
+
+    public async Task<bool> UpdateProfilePhoto(Guid userId, Guid? photoId, CancellationToken cancellationToken)
+    {
+        var r = await _sqlRepository.UpdateByFilter<CollabUser>(s => s.id == userId,
+            s => new { media_id = photoId }, cancellationToken);
+        return r;
+    }
 
     public async Task<bool> UpdateSession(Guid connectionId, DateTime lastDate, string appVersion, int? storeId,
         string? user_agent, int? buildNumber, int clearedCache, CancellationToken cancellationToken)
