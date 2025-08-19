@@ -10,9 +10,9 @@
           (imageCropped)="imageCropped($event)"
         ></image-cropper>
         <button class="my-btn check-wrapper" (click)="onSubmitBtn()">
-          <i class="fa-solid fa-check icon-btn"></i>
+          <fa-icon class="icon-btn" [icon]="faCheck"/>
         </button>
-      <button class="my-btn x-mark-wrapper p-2" (click)="onDone()"><i class="fa-solid fa-xmark icon-btn"></i></button>
+      <button class="my-btn x-mark-wrapper p-2" (click)="onDone()"><fa-icon class="icon-btn" [icon]="faXmark"/></button>
 
     </div>
   </div>

@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {LocationStrategy} from '@angular/common';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-image-viewer',
@@ -45,6 +46,8 @@ export class ImageViewerComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
 
   }
+
+  protected readonly faXmark = faXmark;
 }
 
 export interface ImageViewerData {

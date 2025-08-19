@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { faXmark, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-image-cropper-manager',
@@ -48,6 +49,9 @@ export class ImageCropperManagerComponent implements OnInit {
   onDone() {
     this.dialogRef.close(true);
   }
+
+  protected readonly faCheck = faCheck;
+  protected readonly faXmark = faXmark;
 }
 
 export interface ImageCropperManagerData {

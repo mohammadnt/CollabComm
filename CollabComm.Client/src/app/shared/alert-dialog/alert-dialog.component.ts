@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -26,4 +27,5 @@ export class AlertDialogComponent implements OnInit {
   }
 
   protected readonly alert = alert;
+  protected readonly faXmark = faXmark;
 }
