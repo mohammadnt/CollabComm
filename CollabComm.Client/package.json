@@ -29,7 +29,6 @@
     "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "angular-svg-round-progressbar": "^14.0.0",
-    "audiobuffer-to-wav": "^1.0.0",
     "bootstrap": "^5.3.7",
     "dexie": "^4.0.11",
     "lamejs": "^1.2.1",

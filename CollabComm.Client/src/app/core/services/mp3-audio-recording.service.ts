@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RecordRTCPromisesHandler} from "recordrtc";
 import * as RecordRTC from "recordrtc";
+import {WavHelper} from '../helper/wav-helper';
 
 declare var lamejs: any;
 
@@ -169,8 +170,7 @@ export class Mp3AudioRecordingServiceOgg {
   // }
 
   audioBufferToMp3(buffer: AudioBuffer) {
-    const toWav = require('audiobuffer-to-wav');
-    var wav = toWav(buffer)
+    var wav = WavHelper.audioBufferToWav(buffer, undefined);
     let wavHdr = lamejs.WavHeader.readHeader(new DataView(wav));
 
     //Stereo
