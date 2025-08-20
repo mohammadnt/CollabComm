@@ -34,7 +34,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
   imports: [
     ToastrModule.forRoot(),
     ReactiveFormsModule,
-    forwardRef(() => OutsideClickDirective),
+    OutsideClickDirective,
     PickerModule,
     MatButtonModule,
     MatMenuModule,
@@ -60,6 +60,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
   ],
   exports: [
+    OutsideClickDirective,
     FontAwesomeModule,
     ReactiveFormsModule,
     PickerModule,
