@@ -1,23 +1,23 @@
-<div class="app-container d-flex flex-column h-100" #conversationListDiv>
+<div class="app-container d-flex flex-column h-100 position-relative" #conversationListDiv>
 
   <h3 class="view-title">Chats</h3>
   <div class="d-flex buttons-wrapper mb-2">
-    <div class="order-2 tab-button text-center py-2"
-         matRipple [matRippleColor]="'rgba(0, 0, 0, .14)'"
-         [ngClass]="{'active' : isGroupChatOnly}" (click)="setGroupChatOnly(true)">
+    <button class="order-2 tab-button text-center py-2"
+            matButton
+            [ngClass]="{'active' : isGroupChatOnly}" (click)="setGroupChatOnly(true)">
       <div>Groups</div>
       <div class="badge" *ngIf="groupsUnreadCount > 0">
         {{ groupsUnreadCount }}
       </div>
-    </div>
-    <div class="order-1 tab-button text-center py-2"
-         matRipple [matRippleColor]="'rgba(0, 0, 0, .14)'"
-         [ngClass]="{'active' : !isGroupChatOnly}" (click)="setGroupChatOnly(false)">
+    </button>
+    <button class="order-1 tab-button text-center py-2"
+            matButton
+            [ngClass]="{'active' : !isGroupChatOnly}" (click)="setGroupChatOnly(false)">
       <div>Users</div>
       <div class="badge" *ngIf="usersUnreadCount > 0">
         {{ usersUnreadCount }}
       </div>
-    </div>
+    </button>
   </div>
 
   <div class="chat-list flex-grow-1 overflow-y-overlay" (scroll)="onScroll()" #scrollWrapperDiv>
@@ -26,7 +26,7 @@
     </button>
     <div class="w-100">
       <div class="search-wrapper">
-        <span class="me-2"><fa-icon [icon]="faMagnifyingGlass" /></span>
+        <span class="me-2"><fa-icon [icon]="faMagnifyingGlass"/></span>
         <input placeholder="Search" type="text" (keyup)="onSearchInputKeyPress($event)"
                #searchInput>
 
