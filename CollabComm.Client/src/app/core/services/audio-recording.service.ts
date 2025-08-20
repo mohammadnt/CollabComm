@@ -7,6 +7,7 @@ import OpusMediaRecorder from 'opus-media-recorder/OpusMediaRecorder.umd.js';
 // Use worker-loader
 // @ts-ignore
 import encoderPath from 'opus-media-recorder/encoderWorker.umd.js';
+import {WavHelper} from '../helper/wav-helper';
 
 @Injectable({
   providedIn: 'root'
@@ -118,8 +119,7 @@ export class AudioRecordingServiceOgg {
             audioBuffer.getChannelData(i).set(onChannelData);
           }
 
-          const toWav = require('audiobuffer-to-wav');
-          const wav = toWav(audioBuffer);
+          var wav = WavHelper.audioBufferToWav(audioBuffer, undefined);
           const dataBlob = new Blob([new DataView(wav)], {type: 'audio/wav'});
           callback(dataBlob);
         }
