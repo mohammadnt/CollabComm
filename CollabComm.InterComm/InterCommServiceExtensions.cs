@@ -10,8 +10,7 @@ public static class InterCommServiceExtensions
     public static IServiceCollection AddInterCommServices(this IServiceCollection services,
         IConfiguration configuration)
     {
-        // services.AddSingleton(serviceFactory => serviceFactory.GetRequiredService<IOptions<SiteConfig>>().Value);
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("Postgres");
         services.AddDbContext<DatabaseContext>(options => { options.UseNpgsql(connectionString); });
 
         services.AddScoped<IBaseRepository, BaseRepository>();
