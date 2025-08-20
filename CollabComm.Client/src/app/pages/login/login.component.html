@@ -1,14 +1,15 @@
-<div class="app-container d-flex flex-column h-100">
+<div class="app-container h-100 d-flex flex-column justify-content-center align-items-center">
+
+
   @if (!isRegister) {
-    <form class="h-100 mt-3 flex-grow-1"
-          [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      <div class="form-group">
-        <label for="username">
-          {{ 'Username' }}
+    <form class='login-form' [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="flex-row">
+        <label class="lf--label" for="username">
+          <fa-icon class="icon" [icon]="faUser"/>
         </label>
-        <div>
-          <input type="text" formControlName="username" id="username" class="form-control"
-                 placeholder="Username"
+        <div class="input-wrapper">
+          <input type="text" formControlName="username" id="username" class="lf--input"
+                 placeholder="Username" id="username"
                  [ngClass]="{ 'is-invalid': submitted && loginFormData['username'].errors }"/>
           <div *ngIf="submitted && loginFormData['username'].errors"
                class="invalid-feedback">
@@ -18,16 +19,13 @@
             </div>
           </div>
         </div>
-        <div class="form-control-comment">
-        </div>
       </div>
-
-      <div class="form-group pt-2">
-        <label for="password">
-          {{ 'Password' }}
+      <div class="flex-row">
+        <label class="lf--label" for="password">
+          <fa-icon class="icon" [icon]="faKey"/>
         </label>
-        <div>
-          <input type="password" formControlName="password" class="form-control"
+        <div class="input-wrapper">
+          <input type="password" formControlName="password" class="lf--input"
                  placeholder="Password" id="password"
                  [ngClass]="{ 'is-invalid': submitted && loginFormData['password'].errors }"/>
           <div *ngIf="submitted && loginFormData['password'].errors"
@@ -38,72 +36,21 @@
             </div>
           </div>
         </div>
-        <div class="form-control-comment">
-        </div>
       </div>
-
-      <div class="d-flex justify-content-center form-group py-3">
-        <button [disabled]="submitClick" class="my-btn submit-primary" type="submit">
-          Login
-        </button>
-      </div>
-      <div>
-        <div *ngIf="loginError" class="alert alert-danger">{{ loginError }}</div>
-      </div>
+      <input class='lf--submit' type='submit' value='LOGIN'>
     </form>
-
-    <div class="align-self-stretch d-flex justify-content-center mb-5">
-      <button class="my-btn" (click)="onSwitchToRegister()">Register</button>
-    </div>
+    <a class='lf--forgot' href='#'>Forgot Password?</a>
+    <a class='lf--forgot' (click)="onSwitch()">Sign Up</a>
   } @else {
-    <form class="h-100 consultation-form mt-3 flex-grow-1" [formGroup]="registerForm" (ngSubmit)="onRegister()">
-
-      <div class="form-group">
-        <label>
-          {{ 'Username' }}
+    <form class='login-form'>
+      <div class="flex-row">
+        <label class="lf--label" for="first_name">
+          <fa-icon class="icon" [icon]="faIdCard"/>
         </label>
-        <div>
-          <input type="text" formControlName="username" class="form-control"
-                 placeholder="Username"
-                 [ngClass]="{ 'is-invalid': submitted && registerFormData['username'].errors }"/>
-          <div *ngIf="submitted && registerFormData['username'].errors"
-               class="invalid-feedback">
-            <div class=""
-                 *ngIf="registerForm.getErrorForControl('username', 'required')">
-              Please enter username.
-            </div>
-          </div>
-        </div>
-        <div class="form-control-comment">
-        </div>
-      </div>
-
-      <div class="form-group pt-2">
-        <label>
-          {{ 'Password' }}
-        </label>
-        <div>
-          <input type="password" formControlName="password" class="form-control"
-                 placeholder="Password"
-                 [ngClass]="{ 'is-invalid': submitted && registerFormData['password'].errors }"/>
-          <div *ngIf="submitted && registerFormData['password'].errors"
-               class="invalid-feedback">
-            <div class=""
-                 *ngIf="registerForm.getErrorForControl('password','required')">
-              Please enter password.
-            </div>
-          </div>
-        </div>
-        <div class="form-control-comment">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>
-          {{ 'First Name' }}
-        </label>
-        <div>
-          <input type="text" formControlName="first_name" class="form-control"
+        <div class="input-wrapper">
+          <input type="text" formControlName="first_name" class="lf--input"
                  placeholder="First Name"
+                 id="first_name_signup"
                  [ngClass]="{ 'is-invalid': submitted && registerFormData['first_name'].errors }"/>
           <div *ngIf="submitted && registerFormData['first_name'].errors"
                class="invalid-feedback">
@@ -113,17 +60,15 @@
             </div>
           </div>
         </div>
-        <div class="form-control-comment">
-        </div>
       </div>
-
-      <div class="form-group pt-2">
-        <label>
-          {{ 'Last Name' }}
+      <div class="flex-row">
+        <label class="lf--label" for="last_name_signup">
+          <fa-icon class="icon" [icon]="faIdCard"/>
         </label>
-        <div>
-          <input type="text" formControlName="last_name" class="form-control"
+        <div class="input-wrapper">
+          <input type="text" formControlName="last_name" class="lf--input"
                  placeholder="Last Name"
+                 id="last_name_signup"
                  [ngClass]="{ 'is-invalid': submitted && registerFormData['last_name'].errors }"/>
           <div *ngIf="submitted && registerFormData['last_name'].errors"
                class="invalid-feedback">
@@ -133,23 +78,47 @@
             </div>
           </div>
         </div>
-        <div class="form-control-comment">
+      </div>
+      <div class="flex-row">
+        <label class="lf--label" for="username_signup">
+          <fa-icon class="icon" [icon]="faUser"/>
+        </label>
+        <div class="input-wrapper">
+          <input type="text" formControlName="username" class="lf--input"
+                 placeholder="Username"
+                 id="username_signup"
+                 [ngClass]="{ 'is-invalid': submitted && registerFormData['username'].errors }"/>
+          <div *ngIf="submitted && registerFormData['username'].errors"
+               class="invalid-feedback">
+            <div class=""
+                 *ngIf="registerForm.getErrorForControl('username', 'required')">
+              Please enter username.
+            </div>
+          </div>
         </div>
       </div>
-
-      <div class="d-flex form-group justify-content-center py-3">
-        <button [disabled]="submitClick" class="my-btn submit-primary" type="submit">
-          Register
-        </button>
+      <div class="flex-row">
+        <label class="lf--label" for="password_signup">
+          <fa-icon class="icon" [icon]="faKey"/>
+        </label>
+        <div class="input-wrapper">
+          <input type="password" formControlName="password" class="lf--input"
+                 placeholder="Password"
+                 id="password_signup"
+                 [ngClass]="{ 'is-invalid': submitted && registerFormData['password'].errors }"/>
+          <div *ngIf="submitted && registerFormData['password'].errors"
+               class="invalid-feedback">
+            <div class=""
+                 *ngIf="registerForm.getErrorForControl('password','required')">
+              Please enter password.
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <div *ngIf="registerError" class="alert alert-danger">{{ registerError }}</div>
-      </div>
+      <input class='lf--submit' type='submit' value='Sign Up'>
     </form>
-    <div class="align-self-stretch d-flex justify-content-center mb-5">
-      <button class="my-btn" (click)="onSwitchToLogin()">Login</button>
-    </div>
+    <a class='lf--forgot' href='#'>Forgot password?</a>
+    <a class='lf--forgot' (click)="onSwitch()">Sign In</a>
   }
+
 </div>
-
-

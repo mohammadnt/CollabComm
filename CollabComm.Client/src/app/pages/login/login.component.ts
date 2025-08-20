@@ -10,6 +10,7 @@ import {getCookie, isNotOnDotnet, setCookie} from '../../core/cookie-utils';
 import {CollabUserInfo} from '../../models/UserModels';
 import {StorageService} from '../../core/services/storage.service';
 import {Md5} from 'ts-md5';
+import {faIdCard, faKey, faUser} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -102,33 +103,29 @@ export class LoginComponent extends BasePage implements OnInit, AfterViewInit, O
     return this.registerForm.controls;
   }
 
-  onSwitchToLogin() {
+  onSwitch() {
     this.loginError = undefined;
-    this.isRegister = false;
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+    this.registerError = undefined;
+    this.isRegister = !this.isRegister;
+    if(this.isRegister){
+      this.registerForm = this.formBuilder.group({
+        username: ['', Validators.required],
+        password: ['', Validators.required],
+        first_name: ['', Validators.required],
+        last_name: ['', Validators.required]
+      });
+    }else {
+      this.loginForm = this.formBuilder.group({
+        username: ['', Validators.required],
+        password: ['', Validators.required]
+      });
+    }
     this.loginError = undefined;
     this.registerError = undefined;
     this.submitClick = false;
     this.submitted = false;
   }
 
-  onSwitchToRegister() {
-    this.registerError = undefined;
-    this.isRegister = true;
-    this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required]
-    });
-    this.loginError = undefined;
-    this.registerError = undefined;
-    this.submitClick = false;
-    this.submitted = false;
-  }
 
   onLogin() {
     this.loginError = '';
@@ -233,4 +230,7 @@ export class LoginComponent extends BasePage implements OnInit, AfterViewInit, O
     }, 1000);
   }
 
+  protected readonly faIdCard = faIdCard;
+  protected readonly faUser = faUser;
+  protected readonly faKey = faKey;
 }
