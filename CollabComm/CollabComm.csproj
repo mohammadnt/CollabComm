@@ -38,7 +38,6 @@
     </Target>
 
     <Target Name="CreateAppDataFolder" BeforeTargets="Publish">
-        <MakeDir Directories="$(PublishDir)App_Data" Condition="!Exists('$(PublishDir)App_Data')" />
         <Exec Command="npm run build" WorkingDirectory="../CollabComm.Client" />
         <RemoveDir Directories="$(PublishDir)wwwroot" />
         <ItemGroup>
