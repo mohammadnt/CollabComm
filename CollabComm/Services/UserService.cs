@@ -184,7 +184,7 @@ public class UserService : IUserService
     public async Task<Session> GetSession(Guid id, Guid user_id, CancellationToken cancellationToken)
     {
         var s = await _sqlRepository.GetById<Session>(id, cancellationToken);
-        if (s.user_id != user_id || s.deleted == true)
+        if (s != null && (s.user_id != user_id || s.deleted == true))
             s = null;
         return s;
     }
