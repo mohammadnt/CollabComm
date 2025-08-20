@@ -25,6 +25,22 @@ export class BaseRestService {
 
   }
 
+  addContact(username: string, title: string): Observable<any> {
+    const model = {title: username,second_title: title};
+    return this.http.post<BaseResult<any>>(`${endpoint()}Chat/AddContact`, model).pipe(
+      catchError((err: any, caught: Observable<any>) => {
+        return this.loginService.handleError(err);
+      })
+    );
+  }
+  contacts(): Observable<any> {
+    return this.http.post<BaseResult<any>>(`${endpoint()}Chat/Contacts`, null).pipe(
+      catchError((err: any, caught: Observable<any>) => {
+        return this.loginService.handleError(err);
+      })
+    );
+  }
+
   getMyData(userAgent: string, deviceId: string | undefined): Observable<any> {
     const model = {user_agent: userAgent, device_id: deviceId, is_from_web: true};
     return this.http.post<BaseResult<any>>(`${endpoint()}user/MyData`, model).pipe(

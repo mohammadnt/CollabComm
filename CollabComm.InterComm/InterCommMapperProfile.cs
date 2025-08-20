@@ -14,5 +14,6 @@ public class InterCommMapperProfile : Profile
         CreateMap<ChatMedia, ChatMediaInfo>();
         CreateMap<PublicUserMedia, PublicUserMediaInfo>();
         CreateMap<ChatMessage, ChatMessageInfo>();
+        CreateMap<Contact, ContactInfo>();
     }
 }

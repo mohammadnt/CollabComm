@@ -15,4 +15,12 @@ public class ContactInfo
     public Guid target_id { get; set; }
     public string username { get; set; }
     public bool deleted { get; set; }
+    
+    public CollabUserInfo user { get; set; }
+
+    public ContactInfo SetUser(CollabUserInfo user)
+    {
+        this.user = user;
+        return this;
+    }
 }

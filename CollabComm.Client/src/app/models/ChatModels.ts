@@ -63,6 +63,8 @@ export interface ContactInfo {
   target_id: string;
   mobile: string;
   deleted: boolean;
+
+  user: CollabUserInfo;
 }
 
 export interface FullConversationInfo {

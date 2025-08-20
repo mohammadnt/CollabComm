@@ -1,0 +1,34 @@
+.media-wrapper-item {
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: rgb(121, 103, 211);
+  background: linear-gradient(315deg, rgba(121, 103, 211, 1) 0%, rgba(181, 171, 234, 1) 100%);
+}
+
+.item-wrapper {
+  border-bottom: solid 1px #ededed;
+}
+
+.full-name {
+  font-size: 0.8rem;
+}
+
+.media-text {
+  color: white;
+  font-size: 1rem;
+}
+
+.close-btn {
+  font-size: 1.2rem;
+}
+
+.add-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  padding: 4px 8px;
+  font-size: 1.8rem;
+}

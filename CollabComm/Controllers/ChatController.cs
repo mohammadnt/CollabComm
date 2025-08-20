@@ -90,24 +90,6 @@ public class ChatController : BaseController
     }
 
     [HttpPost]
-    public async Task<ResultSet<object>> Contacts(CancellationToken cancellationToken = default)
-    {
-        var convs = await _chatService.GetContacts(App.UserIdGuid, cancellationToken);
-        return new ResultSet<object>(convs);
-    }
-
-    [HttpPost]
-    public async Task<ResultSet<object>> AddContacts([FromBody] TitleRequestDTO request,
-        CancellationToken cancellationToken = default)
-    {
-        var username = request.title;
-        var user = await _userService.GetUserInfo(username, cancellationToken);
-        var contact = await _chatService.AddContact(App.UserIdGuid, user.id,
-            username, cancellationToken);
-        return new ResultSet<object>(new List<ContactInfo>() { contact });
-    }
-
-    [HttpPost]
     public async Task<ResultSet<object>> Users([FromBody] GetUserRequestDTO request,
         CancellationToken cancellationToken = default)
     {
@@ -377,6 +359,28 @@ public class ChatController : BaseController
         }
 
         return new ResultSet<object>(true);
+    }
+
+    [HttpPost]
+    public async Task<ResultSet<object>> AddContact([FromBody] TitleTitleRequestDTO request,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await _userService.GetUser(request.title, cancellationToken);
+        if (user == null) 
+            return new ResultSet<object>() { code = ResponseCodes.WrongArgument };
+        var oldContact = await _chatService.GetContact(App.UserIdGuid, user.id, cancellationToken);
+        if (oldContact != null)
+            return new ResultSet<object>() { code = ResponseCodes.DuplicateKeyField };
+        await _chatService.AddContact(App.UserIdGuid, user.id, user.username, request.second_title, cancellationToken);
+        return new ResultSet<object>(true);
+    }
+
+
+    [HttpPost]
+    public async Task<ResultSet<object>> Contacts(CancellationToken cancellationToken = default)
+    {
+        var contacts = await _chatService.GetContacts(App.UserIdGuid, cancellationToken);
+        return new ResultSet<object>(new { contacts });
     }
 
     [HttpGet]

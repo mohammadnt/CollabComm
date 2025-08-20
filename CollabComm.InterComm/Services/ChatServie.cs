@@ -37,8 +37,9 @@ public interface IChatService
         Guid userId, CancellationToken cancellationToken);
 
     Task<List<ContactInfo>> GetContacts(Guid userId, CancellationToken cancellationToken);
+    Task<ContactInfo> GetContact(Guid userId,Guid targetId, CancellationToken cancellationToken);
 
-    Task<ContactInfo> AddContact(Guid userId, Guid targetId, string username,
+    Task<ContactInfo> AddContact(Guid userId, Guid targetId, string username,string title,
         CancellationToken cancellationToken);
 
     Task<List<CollabUserInfo>> GetUsers(List<Guid> userIds, CancellationToken cancellationToken);
@@ -99,7 +100,7 @@ public class ChatService : IChatService
     public async Task<ChatMediaInfo> GetChatMedia(string id, Guid user_id, CancellationToken cancellationToken)
     {
         var media = await _mongoService.GetChatMedia(id);
-        if (media.from_id == media.to_id)
+        if (media.from_id == media.to_id && user_id != media.from_id)
         {
             var userGroup = await GetMyUserGroup(media.from_id, user_id, cancellationToken);
             if (userGroup == null)
@@ -197,14 +198,15 @@ public class ChatService : IChatService
         return q;
     }
 
-    public async Task<ContactInfo> AddContact(Guid userId, Guid targetId, string username,
+    public async Task<ContactInfo> AddContact(Guid userId, Guid targetId, string username,string title,
         CancellationToken cancellationToken)
     {
         var item = new Contact()
         {
             user_id = userId,
             target_id = targetId,
-            username = username
+            username = username,
+            title = title
         };
         var q = (await _sqlRepository.Insert(item));
         return _mapper.Map<ContactInfo>(q);
@@ -212,9 +214,24 @@ public class ChatService : IChatService
 
     public async Task<List<ContactInfo>> GetContacts(Guid userId, CancellationToken cancellationToken)
     {
-        var q = (await _sqlRepository.GetByFilter<Contact>(s => s.user_id == userId))
-            .OrderBy(s => s.title);
-        return _mapper.Map<List<ContactInfo>>(q);
+        var q1 = from c in _dbContext.contact
+            join u in _dbContext.collab_user
+                on c.target_id equals u.id
+            where c.deleted == false && c.user_id == userId
+            orderby c.title
+            select new { c, u };
+
+        var q = await q1.ToListAsync(cancellationToken);
+        var q2 = q.Select(s => _mapper.Map<ContactInfo>(s.c).SetUser(_mapper.Map<CollabUserInfo>(s.u)))
+            .ToList();
+        return q2;
+    }
+
+    public async Task<ContactInfo> GetContact(Guid userId,Guid targetId, CancellationToken cancellationToken)
+    {
+        var q = (await _sqlRepository.GetByFilter<Contact>(s => s.user_id == userId && s.target_id == targetId))
+            .FirstOrDefault();
+        return _mapper.Map<ContactInfo>(q);
     }
 
     public async Task<List<ConversationInfo>> GetConversations(Guid userId,

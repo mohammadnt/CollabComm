@@ -1,0 +1,31 @@
+<div class="app-container wrapper position-relative h-100">
+  <button matFab class="my-btn add-btn" (click)="onAddBtn()">
+    <fa-icon [icon]="faAdd"/>
+  </button>
+  <div class="d-flex align-items-center justify-content-end px-2 mb-3 pt-3">
+    <div>
+      <fa-icon class="close-btn cursor-pointer" routerLink="/" [icon]="faXmark"/>
+    </div>
+  </div>
+  <div class="">
+    <h5>Contacts</h5>
+    @for (contact of contacts; track contact.id; let idx = $index) {
+      <div class="item-wrapper d-flex py-2 align-items-center" [routerLink]="'/chat/' + contact.target_id">
+        <div class="media-wrapper-item d-flex justify-content-center align-items-center ms-3">
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center align-items-center media-text"
+                 *ngIf="!contact.user?.media_id">
+              {{ getHeaderName(contact.user) }}
+            </div>
+            <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(contact.user)}}"
+                 *ngIf="contact.user?.media_id">
+          </div>
+        </div>
+        <div class="full-name ms-2">{{ contact.title }}</div>
+      </div>
+    } @empty {
+      <div>You have no contacts.</div>
+    }
+  </div>
+
+</div>

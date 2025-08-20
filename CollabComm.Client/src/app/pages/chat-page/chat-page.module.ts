@@ -29,7 +29,8 @@ import {ConversationPageComponent} from "./conversation-page/conversation-page.c
 import {AuthGuard} from '../../core/auth-guard.service';
 import {SecurePipe} from '../../core/pipe/secure.pipe';
 import {DirectionPipe} from '../../core/pipe/direction.pipe';
-
+import {ContactsComponent} from './contacts/contacts.component';
+import {AddContactDialogComponent} from './contacts/add-contact-dialog/add-contact-dialog.component';
 const routes: Routes = [
   {
     path: '',
@@ -45,11 +46,13 @@ const routes: Routes = [
   {path: 'group-members/:id', component: GroupMemberComponent, canActivate: [AuthGuard]},
 
   {path: 'chat/:userid', component: ChatPageComponent, canActivate: [AuthGuard]},
+  {path: 'contacts', component: ContactsComponent, canActivate: [AuthGuard]},
 
 ];
 
 @NgModule({
   declarations: [
+    ContactsComponent,
     TwemojiTextModuleComponent,
     ChatPageComponent,
     ProfileInfoComponent,
@@ -66,6 +69,7 @@ const routes: Routes = [
     CustomTextAreaComponent,
     RichTextAreaComponent,
     ConversationPageComponent,
+    AddContactDialogComponent,
   ],
   exports: [
   ],

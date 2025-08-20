@@ -23,7 +23,7 @@ import {BaseResult} from '../../../models/BaseResult';
 import {endpoint} from '../../../core/cookie-utils';
 import {isNullOrUndefined} from '../../../core/util';
 import {BasePage} from '../../../core/classes/base-page';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-conversation-page',
@@ -437,4 +437,5 @@ export class ConversationPageComponent extends BasePage implements OnInit, OnDes
   }
 
   protected readonly faMagnifyingGlass = faMagnifyingGlass;
+  protected readonly faAddressBook = faAddressBook;
 }

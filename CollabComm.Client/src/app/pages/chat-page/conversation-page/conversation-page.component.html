@@ -21,9 +21,9 @@
   </div>
 
   <div class="chat-list flex-grow-1 overflow-y-overlay" (scroll)="onScroll()" #scrollWrapperDiv>
-    <!--  <div>-->
-    <!--    <button class="my-btn btn-background" (click)="onContacts()">Contacts</button>-->
-    <!--  </div>-->
+    <button matFab class="my-btn contact-btn" routerLink="/contacts">
+      <fa-icon [icon]="faAddressBook"/>
+    </button>
     <div class="w-100">
       <div class="search-wrapper">
         <span class="me-2"><fa-icon [icon]="faMagnifyingGlass" /></span>
