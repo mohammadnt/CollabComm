@@ -1,10 +1,9 @@
 ﻿using System.Net.WebSockets;
 using System.Text;
 using CollabComm.Core.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace CollabComm.InterComm.Services;
+namespace CollabComm.Services;
 
 public class SocketConnection
 {

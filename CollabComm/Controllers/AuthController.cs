@@ -3,7 +3,7 @@ using CollabComm.Core.Config;
 using CollabComm.Core.Helpers;
 using CollabComm.Core.Web.Controllers;
 using CollabComm.DTO;
-using CollabComm.InterComm.Services;
+using CollabComm.Services;
 using Microsoft.AspNetCore.Mvc;
 
 

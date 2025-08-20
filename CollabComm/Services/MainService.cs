@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using CollabComm.Core.Models;
 using CollabComm.InterComm.Models;
 using CollabComm.InterComm.Repositories;
 using CollabComm.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace CollabComm.InterComm.Services;
+namespace CollabComm.Services;
 
 public interface IMainService
 {
@@ -64,7 +58,7 @@ public class MainService : IMainService
         CancellationToken cancellationToken)
     {
         var media = await _sqlRepository.Insert(
-            Models.PublicUserMedia.Generate(userId, type, mimeType, path),
+            PublicUserMedia.Generate(userId, type, mimeType, path),
             cancellationToken);
 
 

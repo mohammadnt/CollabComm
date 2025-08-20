@@ -5,7 +5,7 @@ using CollabComm.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace CollabComm.InterComm.Services;
+namespace CollabComm.Services;
 
 public interface IMongoService
 {

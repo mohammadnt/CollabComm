@@ -7,9 +7,8 @@ using CollabComm.InterComm.Models;
 using CollabComm.InterComm.Repositories;
 using CollabComm.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace CollabComm.InterComm.Services;
+namespace CollabComm.Services;
 
 public interface IUserService
 {

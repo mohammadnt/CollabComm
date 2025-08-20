@@ -8,7 +8,7 @@ using CollabComm.Core.Web.Extensions;
 using CollabComm.Core.Web.Middlewares;
 using CollabComm.InterComm;
 using CollabComm.InterComm.Repositories;
-using CollabComm.InterComm.Services;
+using CollabComm.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Options;

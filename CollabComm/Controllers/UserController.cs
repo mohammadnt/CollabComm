@@ -6,8 +6,7 @@ using CollabComm.Core.Models;
 using CollabComm.Core.Web.Controllers;
 using CollabComm.Core.Web.Extensions;
 using CollabComm.DTO;
-using CollabComm.InterComm.Models;
-using CollabComm.InterComm.Services;
+using CollabComm.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

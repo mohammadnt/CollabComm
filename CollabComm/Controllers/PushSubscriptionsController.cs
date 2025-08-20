@@ -4,7 +4,7 @@ using CollabComm.Core;
 using CollabComm.Core.Config;
 using CollabComm.Core.Web.Controllers;
 using CollabComm.DTO;
-using CollabComm.InterComm.Services;
+using CollabComm.Services;
 using Lib.Net.Http.WebPush;
 using Lib.Net.Http.WebPush.Authentication;
 using Microsoft.AspNetCore.Authorization;

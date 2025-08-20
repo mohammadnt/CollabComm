@@ -4,10 +4,9 @@ using CollabComm.InterComm.MongoModels;
 using CollabComm.InterComm.Repositories;
 using CollabComm.Models;
 using Lib.Net.Http.WebPush;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace CollabComm.InterComm.Services;
+namespace CollabComm.Services;
 
 public interface IProcessMessage
 {

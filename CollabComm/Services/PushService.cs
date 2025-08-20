@@ -6,7 +6,7 @@ using Lib.Net.Http.WebPush.Authentication;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace CollabComm.InterComm.Services;
+namespace CollabComm.Services;
 
 public interface IPushService
 {

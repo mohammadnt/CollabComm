@@ -1,6 +1,6 @@
 ﻿ using CollabComm.Core;
 using CollabComm.Core.Web.Controllers;
-using CollabComm.InterComm.Services;
+using CollabComm.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

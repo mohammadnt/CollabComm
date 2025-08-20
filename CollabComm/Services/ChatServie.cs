@@ -6,7 +6,7 @@ using CollabComm.InterComm.Repositories;
 using CollabComm.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CollabComm.InterComm.Services;
+namespace CollabComm.Services;
 
 public interface IChatService
 {

@@ -1,13 +1,8 @@
 using AutoMapper;
 using CollabComm.Core;
 using CollabComm.Core.Config;
-using CollabComm.Core.Helpers;
-using CollabComm.Core.Models;
 using CollabComm.Core.Web.Controllers;
-using CollabComm.Core.Web.Extensions;
-using CollabComm.InterComm.Models;
-using CollabComm.InterComm.Services;
-using Microsoft.AspNetCore.Authorization;
+using CollabComm.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CollabComm.Controllers;
