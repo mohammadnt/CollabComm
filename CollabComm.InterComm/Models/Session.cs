@@ -14,7 +14,7 @@ public class Session : IEntity<Guid>
     public string? user_agent { get; set; }
     public string? subscription { get; set; }
     public string? device_id { get; set; }
-    public bool? deleted { get; set; }
+    public bool deleted { get; set; }
     public DateTime? last_online_date { get; set; }
     public string? app_version { get; set; }
     public int? build_number { get; set; }

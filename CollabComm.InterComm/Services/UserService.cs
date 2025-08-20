@@ -109,7 +109,7 @@ public class UserService : IUserService
         CancellationToken cancellationToken)
     {
         var x = (await _sqlRepository.GetByFilter<Session>(
-            s => userIds.Contains(s.user_id) && s.deleted != true &&
+            s => userIds.Contains(s.user_id) && s.deleted == false &&
                  (DateTime.UtcNow - s.last_online_date).Value.Days < 7,
             cancellationToken));
         return _mapper.Map<List<SessionInfo>>(x);
@@ -119,7 +119,7 @@ public class UserService : IUserService
         CancellationToken cancellationToken)
     {
         var x = (await _sqlRepository.GetByFilter<Session>(
-            s => s.user_id == userId && s.deleted != true &&
+            s => s.user_id == userId && s.deleted == false &&
                  (DateTime.UtcNow - s.last_online_date).Value.Days < 7,
             cancellationToken));
         return _mapper.Map<List<SessionInfo>>(x);

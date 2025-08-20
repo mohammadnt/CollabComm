@@ -115,7 +115,7 @@ public class ChatService : IChatService
         CancellationToken cancellationToken)
     {
         var list = (await _sqlRepository.GetByFilter<UserGroup>(
-            s => s.group_id == groupId && s.user_id == userId && s.deleted != true,
+            s => s.group_id == groupId && s.user_id == userId && s.deleted == false,
             cancellationToken)).SingleOrDefault();
         return _mapper.Map<UserGroupInfo>(list);
     }
@@ -225,7 +225,7 @@ public class ChatService : IChatService
                 on c.from_id equals ug.group_id into res1
             from ug in res1.DefaultIfEmpty()
             where c.deleted == false && (c.from_id == userId ||
-                                         (c.from_id == c.to_id && ug.user_id == userId && ug.deleted != true))
+                                         (c.from_id == c.to_id && ug.user_id == userId && ug.deleted == false))
             orderby c.last_message_date descending
             select new { c, ug };
 
@@ -264,10 +264,10 @@ public class ChatService : IChatService
     {
         var x = (from ug in _dbContext.user_group
             join c0 in _dbContext.session.Where(s =>
-                    s.deleted != true && (DateTime.UtcNow - s.last_online_date).Value.Days < 7) on ug.user_id equals
+                    s.deleted == false && (DateTime.UtcNow - s.last_online_date).Value.Days < 7) on ug.user_id equals
                 c0.user_id into res1
             from c in res1.DefaultIfEmpty()
-            where ug.group_id == userId && ug.deleted != true
+            where ug.group_id == userId && ug.deleted == false
             select new { ug, c }).ToList();
         var groupBy = x.GroupBy(s => s.ug.user_id);
         var q = groupBy.Select(s => _mapper.Map<UserGroupInfo>(s.First().ug)
@@ -293,7 +293,7 @@ public class ChatService : IChatService
     public async Task<List<UserGroupInfo>> GetUserGroups(Guid userId, CancellationToken cancellationToken)
     {
         var list = await _sqlRepository.GetByFilter<UserGroup>(
-            s => s.group_id == userId && s.deleted != true,
+            s => s.group_id == userId && s.deleted == false,
             cancellationToken);
         return _mapper.Map<List<UserGroupInfo>>(list);
     }
@@ -303,7 +303,7 @@ public class ChatService : IChatService
     {
         var x = (from ug in _dbContext.user_group
             join u in _dbContext.collab_user on ug.user_id equals u.id
-            where ug.group_id == groupId && u.deleted == false && ug.deleted != true
+            where ug.group_id == groupId && u.deleted == false && ug.deleted == false
             select new { ug, u }).ToList();
         var q = x.Select(s => _mapper.Map<UserGroupInfo>(s.ug)
             .SetUser(_mapper.Map<CollabUserInfo>(s.u))
@@ -339,7 +339,7 @@ public class ChatService : IChatService
     public async Task<bool> IsMemberOfGroup(Guid fromId, Guid userId, CancellationToken cancellationToken)
     {
         var item = (await _sqlRepository.GetByFilter<UserGroup>(
-            s => s.group_id == fromId && s.user_id == userId && s.deleted != true,
+            s => s.group_id == fromId && s.user_id == userId && s.deleted == false,
             cancellationToken)).SingleOrDefault();
         return item != null;
     }
@@ -350,7 +350,7 @@ public class ChatService : IChatService
         var x = (from u in _dbContext.collab_user
             join ug1 in _dbContext.user_group on u.id equals ug1.group_id
             join ug2 in _dbContext.user_group on ug1.group_id equals ug2.group_id
-            where ug1.user_id == userId && ug2.user_id == targetId && ug1.deleted != true && ug2.deleted != true
+            where ug1.user_id == userId && ug2.user_id == targetId && ug1.deleted == false && ug2.deleted == false
             select u);
         return _mapper.Map<List<CollabUserInfo>>(x);
     }

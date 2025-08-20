@@ -82,7 +82,7 @@ public class MongoService : IMongoService
         var msgs = await _messageCollection
             .Find(x => (ids.Contains(x.id) && ((x.is_group && gps.Contains(x.from_id)) ||
                                                (!x.is_group && x.from_id == user_id))) &&
-                       x.deleted != true).ToListAsync(cancellationToken);
+                       x.deleted == false).ToListAsync(cancellationToken);
         return _mapper.Map<List<ChatMessageInfo>>(msgs);
     }
 
@@ -104,7 +104,7 @@ public class MongoService : IMongoService
         CancellationToken cancellationToken)
     {
         var msg = await _messageCollection
-            .Find(x => x.deleted != true && x.is_group == isGroup && x.from_id == fromId && x.pair_id == id)
+            .Find(x => x.deleted == false && x.is_group == isGroup && x.from_id == fromId && x.pair_id == id)
             .SingleOrDefaultAsync(cancellationToken);
 
         return _mapper.Map<ChatMessageInfo>(msg);
@@ -115,7 +115,7 @@ public class MongoService : IMongoService
         long? counter, bool isPrevious, int limit, CancellationToken cancellationToken)
     {
         var x = _messageCollection
-            .Find(x => x.deleted != true && x.is_group == isGroup && x.from_id == from_id && x.to_id == to_id &&
+            .Find(x => x.deleted == false && x.is_group == isGroup && x.from_id == from_id && x.to_id == to_id &&
                        (counter == null || (isPrevious && x.conversation_counter < counter) ||
                         (!isPrevious && x.conversation_counter > counter)));
         if (isPrevious)
@@ -130,7 +130,7 @@ public class MongoService : IMongoService
         CancellationToken cancellationToken)
     {
         var msg = await _messageCollection
-            .Find(x => x.deleted != true && x.is_group == isGroup && (x.from_id == from_id && x.to_id == to_id))
+            .Find(x => x.deleted == false && x.is_group == isGroup && (x.from_id == from_id && x.to_id == to_id))
             .SortByDescending(s => s.conversation_counter).Limit(1).SingleOrDefaultAsync(cancellationToken);
 
         return _mapper.Map<ChatMessageInfo>(msg);
@@ -141,7 +141,7 @@ public class MongoService : IMongoService
         int limit, CancellationToken cancellationToken)
     {
         var x = _messageCollection
-            .Find(x => x.deleted != true && x.is_group == isGroup && x.from_id == from_id &&
+            .Find(x => x.deleted == false && x.is_group == isGroup && x.from_id == from_id &&
                        (counter == null || (isPrevious && x.conversation_counter < counter) ||
                         (!isPrevious && x.conversation_counter > counter)));
         if (isPrevious)
@@ -157,7 +157,7 @@ public class MongoService : IMongoService
         CancellationToken cancellationToken)
     {
         var msg = await _messageCollection
-            .Find(x => x.deleted != true && x.is_group == isGroup && (x.from_id == from_id))
+            .Find(x => x.deleted == false && x.is_group == isGroup && (x.from_id == from_id))
             .SortByDescending(s => s.conversation_counter).Limit(1)
             .SingleOrDefaultAsync(cancellationToken);
         return _mapper.Map<ChatMessageInfo>(msg);

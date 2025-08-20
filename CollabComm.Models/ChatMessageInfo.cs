@@ -9,7 +9,7 @@ public class ChatMessageInfo
     public long conversation_counter { get; set; }
     public DateTime creation_date { get; set; }
     public string data { get; set; }
-    public bool? deleted { get; set; }
+    public bool deleted { get; set; }
     public string? forward_id { get; set; }
     public Guid? forward_user_id { get; set; }
     public bool is_delivered { get; set; }

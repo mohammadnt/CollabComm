@@ -274,7 +274,7 @@ namespace CollabComm.InterComm.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<bool?>("deleted")
+                    b.Property<bool>("deleted")
                         .HasColumnType("boolean");
 
                     b.Property<string>("device_id")
