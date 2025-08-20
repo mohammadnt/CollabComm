@@ -434,7 +434,7 @@ public class ChatController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult> ThumbnailChatMedia(string id, [FromQuery] bool is_group,
+    public async Task<object> ThumbnailChatMedia(string id, [FromQuery] bool is_group,
         CancellationToken cancellationToken = default)
     {
         string mediaId = null;
