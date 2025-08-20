@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "run-script-os",
-    "build": "ng build",
+    "build": "ng build --aot --output-hashing=all",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prestart": "node aspnetcore-https",
