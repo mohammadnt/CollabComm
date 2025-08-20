@@ -278,9 +278,13 @@ export class ChatPageComponent extends BasePage implements OnInit, AfterViewInit
     } else {
       this.baseRestService.ConversationWithUser(this.userId).pipe(first())
         .subscribe((d1: BaseResult<FullConversationInfo>) => {
-            d1.data.conversation.user = d1.data.user;
-            d1.data.conversation.user_group = d1.data.user_group;
-            onSuccess((d1.data.conversation));
+            if (d1.data.conversation) {
+              d1.data.conversation.user = d1.data.user;
+              d1.data.conversation.user_group = d1.data.user_group;
+              onSuccess((d1.data.conversation));
+            }else{
+              this.targetUser = d1.data.user;
+            }
           },
           error => {
           });
