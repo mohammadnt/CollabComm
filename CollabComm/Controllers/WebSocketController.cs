@@ -20,7 +20,8 @@ public class WebSocketController : BaseController
     {
         _websocketHandler = websocketHandler;
     }
-    [HttpGet(Name = "wss1")]
+    
+    [HttpGet]
     public async Task Get(CancellationToken cancellationToken = default)
     {
         if (HttpContext.WebSockets.IsWebSocketRequest)

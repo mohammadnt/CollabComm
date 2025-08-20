@@ -1,4 +1,4 @@
-const { env } = require('process');
+const {env} = require('process');
 
 const target = 'http://localhost:13641';
 
@@ -9,6 +9,15 @@ const PROXY_CONFIG = [
     ],
     target,
     secure: false
+  },
+  {
+    context: [
+      "/WebSocket",
+    ],
+    target: target,
+    ws: true,
+    secure: false,
+
   }
 ]
 

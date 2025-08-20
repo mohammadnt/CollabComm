@@ -5,7 +5,7 @@ export const environment = {
   domain: 'localhost',
   siteUrl: 'localhost:13651',
   fullSiteUrl: 'http://localhost:13651',
-  websocketUrl: 'wss://localhost/WebSocket',
+  websocketUrl: '/WebSocket',
   debugSiteUrl: '',
   websocketDebugUrl: '',
   endpoint: '/api/',

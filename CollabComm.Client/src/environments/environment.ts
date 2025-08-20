@@ -9,7 +9,7 @@ export const environment = {
   domain: 'localhost',
   siteUrl: 'localhost:13651',
   fullSiteUrl: 'http://localhost:13651',
-  websocketUrl: 'http://localhost:13641/api/websocketlocal/local',
+  websocketUrl: '/WebSocket',
   debugSiteUrl: '',
   websocketDebugUrl: '',
   endpoint: '/api/',
