@@ -37,6 +37,7 @@
           </div>
         </div>
       </div>
+      <div *ngIf="loginError" class="alert alert-danger">{{ loginError }}</div>
       <input class='lf--submit' type='submit' value='LOGIN'>
     </form>
     <a class='lf--forgot' href='#'>Forgot Password?</a>
@@ -115,6 +116,7 @@
           </div>
         </div>
       </div>
+      <div *ngIf="registerError" class="alert alert-danger">{{ registerError }}</div>
       <input class='lf--submit' type='submit' value='Sign Up'>
     </form>
     <a class='lf--forgot' href='#'>Forgot password?</a>
