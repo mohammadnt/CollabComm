@@ -6,7 +6,7 @@ namespace CollabComm.Core.Web.Middlewares;
 
 public class UnhandledExceptionMiddleware
 {
-    private bool _changeResponse = false;
+    private bool _changeResponse = true;
     private bool _changeResponseForCrash = false;
     private readonly RequestDelegate next;
 
@@ -68,6 +68,6 @@ public class UnhandledExceptionMiddleware
     private static string GetExceptionMessage(Exception ex)
     {
         if (ex.InnerException == null) return ex.Message;
-        return GetExceptionMessage(ex.InnerException);
+        return ex.Message + " \n " + GetExceptionMessage(ex.InnerException);
     }
 }
