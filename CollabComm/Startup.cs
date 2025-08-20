@@ -31,13 +31,7 @@ public class Startup : BaseStartup
 
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-
-
-        services.Configure<CollabCommMongoSettings>(
-        Configuration.GetSection("CollabCommMongoSettings"));
         
-        // services.AddSingleton<IProcessMessage, ProcessMessage>();
-        // services.AddSingleton<IWebsocketHandler, WebsocketHandler>();
 
         services.AddCustomCors(Configuration);
 
@@ -56,8 +50,7 @@ public class Startup : BaseStartup
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IMainService, MainService>();
         services.AddSingleton<IWebsocketHandler, WebsocketHandler>();
-
-        // inject counter and rules stores
+        
         services.AddSingleton<IClientPolicyStore, MemoryCacheClientPolicyStore>();
         services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
