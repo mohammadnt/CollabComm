@@ -41,6 +41,12 @@ public class TitleRequestDTO
     [Required] public string title { get; set; }
 }
 
+public class TitleTitleRequestDTO
+{
+    [Required] public string title { get; set; }
+    [Required] public string second_title { get; set; }
+}
+
 public class OptionalTitleRequestDTO
 {
     public string? title { get; set; }
