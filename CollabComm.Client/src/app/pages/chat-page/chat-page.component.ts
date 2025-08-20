@@ -49,7 +49,7 @@ import {CollabUserInfo} from '../../models/UserModels';
 import {StorageService} from '../../core/services/storage.service';
 import {BaseResult, ResultStatusCode} from '../../models/BaseResult';
 import {endpoint} from '../../core/cookie-utils';
-import { faPaperPlane, faPaperclip, faChevronLeft, faReply,faXmark } from '@fortawesome/free-solid-svg-icons';
+import {faPaperPlane, faPaperclip, faChevronLeft, faReply, faXmark} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-chat-page',
@@ -1408,7 +1408,7 @@ export class ChatPageComponent extends BasePage implements OnInit, AfterViewInit
   }
 
   getFulleName(user: CollabUserInfo | undefined) {
-    if(!user){
+    if (!user) {
       return '';
     }
     return `${user.first_name} ${user.last_name}`
