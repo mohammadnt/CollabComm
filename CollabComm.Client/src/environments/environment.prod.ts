@@ -6,6 +6,8 @@ export const environment = {
   siteUrl: 'localhost:13651',
   fullSiteUrl: 'http://localhost:13651',
   websocketUrl: 'wss://localhost/WebSocket',
+  debugSiteUrl: '',
+  websocketDebugUrl: '',
   endpoint: '/api/',
   adminCookieName: 'isAdmin',
 };
