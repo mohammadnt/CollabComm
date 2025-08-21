@@ -10,7 +10,8 @@ namespace CollabComm.Services;
 
 public interface IChatService
 {
-    Task<ConversationInfo> CreateGroup(Guid userId, string title, CancellationToken cancellationToken);
+    Task<CollabUser> CreateGroup(Guid userId, string username, string title, List<Guid> userIds,
+        CancellationToken cancellationToken);
 
     Task AddToGroup(Guid gpid, List<Guid> userIds, CancellationToken cancellationToken);
 
@@ -37,9 +38,9 @@ public interface IChatService
         Guid userId, CancellationToken cancellationToken);
 
     Task<List<ContactInfo>> GetContacts(Guid userId, CancellationToken cancellationToken);
-    Task<ContactInfo> GetContact(Guid userId,Guid targetId, CancellationToken cancellationToken);
+    Task<ContactInfo> GetContact(Guid userId, Guid targetId, CancellationToken cancellationToken);
 
-    Task<ContactInfo> AddContact(Guid userId, Guid targetId, string username,string title,
+    Task<ContactInfo> AddContact(Guid userId, Guid targetId, string username, string title,
         CancellationToken cancellationToken);
 
     Task<List<CollabUserInfo>> GetUsers(List<Guid> userIds, CancellationToken cancellationToken);
@@ -198,7 +199,7 @@ public class ChatService : IChatService
         return q;
     }
 
-    public async Task<ContactInfo> AddContact(Guid userId, Guid targetId, string username,string title,
+    public async Task<ContactInfo> AddContact(Guid userId, Guid targetId, string username, string title,
         CancellationToken cancellationToken)
     {
         var item = new Contact()
@@ -227,7 +228,7 @@ public class ChatService : IChatService
         return q2;
     }
 
-    public async Task<ContactInfo> GetContact(Guid userId,Guid targetId, CancellationToken cancellationToken)
+    public async Task<ContactInfo> GetContact(Guid userId, Guid targetId, CancellationToken cancellationToken)
     {
         var q = (await _sqlRepository.GetByFilter<Contact>(s => s.user_id == userId && s.target_id == targetId))
             .FirstOrDefault();
@@ -372,24 +373,25 @@ public class ChatService : IChatService
         return _mapper.Map<List<CollabUserInfo>>(x);
     }
 
-    public async Task<ConversationInfo> CreateGroup(Guid userId, string title,
+    public async Task<CollabUser> CreateGroup(Guid userId, string username, string title, List<Guid> userIds,
         CancellationToken cancellationToken)
     {
-        var user = await _sqlRepository.Insert(
-            new CollabUser() { first_name = title, type = (int)UserType.Group },
-            cancellationToken);
-        var gp = await _sqlRepository.Insert(
-            UserGroup.GenerateForAdmin(user.id, userId, true, true),
-            cancellationToken);
-        var conversation =
-            await _sqlRepository.Insert(
-                Conversation.Generate(user.id, user.id),
-                cancellationToken);
+        userIds = userIds.Where(s => s != userId).ToList();
+        var gpUser = new CollabUser() { first_name = title, type = (int)UserType.Group, username = username };
+        await _sqlRepository.Insert(gpUser, cancellationToken);
+        var adminUg = UserGroup.Generate(gpUser.id, userId, true, true);
+        var members = userIds.Select(s => UserGroup.Generate(gpUser.id, s, false, false)).ToList();
+        var conversation = Conversation.Generate(gpUser.id, gpUser.id);
+        var list = new List<IEntity<Guid>>();
+        // list.Add(gpUser);
+        list.Add(adminUg);
+        list.Add(conversation);
+        list.AddRange(members);
+        await _sqlRepository.InsertMany(list, cancellationToken);
 
-        var conv = _mapper.Map<ConversationInfo>(conversation);
-        await ProcessMessage.MakeCreateGroupMessage(_mongoService, _sqlRepository, conv.from_id, userId,
+        await ProcessMessage.MakeCreateGroupMessage(_mongoService, _sqlRepository, gpUser.id, userId,
             title, cancellationToken);
-        return conv;
+        return gpUser;
     }
 
 
@@ -432,24 +434,28 @@ public class ChatService : IChatService
     public async Task AddToGroup(Guid gpid, List<Guid> userIds,
         CancellationToken cancellationToken)
     {
+        var currentUgs = (await _sqlRepository.GetByFilter<UserGroup>(
+            s2 => s2.group_id == gpid && userIds.Contains(s2.user_id),
+            cancellationToken));
+        var mustUpdateUserGroups = new List<Guid>();
         var list = userIds.Select(async s =>
         {
-            var currentUg = (await _sqlRepository.GetByFilter<UserGroup>(
-                s2 => s2.group_id == gpid && s2.user_id == s,
-                cancellationToken)).FirstOrDefault();
+            var currentUg = currentUgs.FirstOrDefault(s2 => s2.user_id == s);
 
             if (currentUg != null)
             {
                 if (currentUg.deleted == true)
-                    await _sqlRepository.UpdateByFilter<UserGroup>(x => x.id == currentUg.id,
-                        s => new { deleted = false },
-                        cancellationToken);
+                    mustUpdateUserGroups.Add(currentUg.id);
+
                 return null;
             }
 
             return UserGroup.Generate(gpid, s, false, false);
         }).Select(t => t.Result).Where(s => s != null).ToList();
         var x = await _sqlRepository.InsertMany(list, cancellationToken);
+        await _sqlRepository.UpdateByFilter<UserGroup>(x => mustUpdateUserGroups.Contains(x.id),
+            s => new { deleted = false },
+            cancellationToken);
     }
 
     public async Task DeleteFromUserGroup(Guid gpid, Guid userId, CancellationToken cancellationToken)

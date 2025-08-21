@@ -67,6 +67,10 @@ export interface ContactInfo {
   user: CollabUserInfo;
 }
 
+export interface SelectableContactInfo extends ContactInfo{
+  is_selected: boolean
+}
+
 export interface FullConversationInfo {
   conversation: ConversationInfo;
   user: CollabUserInfo;

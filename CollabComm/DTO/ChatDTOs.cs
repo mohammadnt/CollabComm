@@ -29,6 +29,13 @@ public class SeenRequestDTO
     public string? id { get; set; }
 }
 
+public class CreateGroupRequestDTO
+{
+    public string username { get; set; }
+    public string title { get; set; }
+    public List<Guid> user_ids { get; set; }
+}
+
 public class AddChatMediaRequestDTO
 {
     public int type { get; set; }

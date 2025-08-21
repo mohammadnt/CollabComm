@@ -25,14 +25,24 @@ export class BaseRestService {
 
   }
 
+  createGroup(username: string, title: string, user_ids: string[]): Observable<any> {
+    const model = {username, title, user_ids};
+    return this.http.post<BaseResult<any>>(`${endpoint()}Chat/CreateGroup`, model).pipe(
+      catchError((err: any, caught: Observable<any>) => {
+        return this.loginService.handleError(err);
+      })
+    );
+  }
+
   addContact(username: string, title: string): Observable<any> {
-    const model = {title: username,second_title: title};
+    const model = {title: username, second_title: title};
     return this.http.post<BaseResult<any>>(`${endpoint()}Chat/AddContact`, model).pipe(
       catchError((err: any, caught: Observable<any>) => {
         return this.loginService.handleError(err);
       })
     );
   }
+
   contacts(): Observable<any> {
     return this.http.post<BaseResult<any>>(`${endpoint()}Chat/Contacts`, null).pipe(
       catchError((err: any, caught: Observable<any>) => {

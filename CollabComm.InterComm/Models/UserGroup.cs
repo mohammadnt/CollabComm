@@ -9,7 +9,7 @@ public class UserGroup : IEntity<Guid>
     public Guid id { get; set; }
     [DatabaseGenerated(DatabaseGeneratedOption.Identity), DataMember]
     public DateTime? creation_date { get; set; } = DateTime.UtcNow;
-    public Guid? user_id { get; set; }
+    public Guid user_id { get; set; }
     public Guid group_id { get; set; }
     public bool is_owner { get; set; }
     public bool is_admin { get; set; }
@@ -30,16 +30,6 @@ public class UserGroup : IEntity<Guid>
             user_id = userId,
             group_id = groupId,
             is_owner = isOwner,
-            is_admin = isAdmin
-        };
-    }
-    public static UserGroup GenerateForAdmin(Guid groupId, Guid userId, bool isOwner, bool isAdmin)
-    {
-        return new UserGroup()
-        {
-            user_id = userId, 
-            group_id = groupId, 
-            is_owner = isOwner, 
             is_admin = isAdmin
         };
     }

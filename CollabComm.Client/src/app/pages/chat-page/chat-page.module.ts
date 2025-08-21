@@ -31,6 +31,7 @@ import {SecurePipe} from '../../core/pipe/secure.pipe';
 import {DirectionPipe} from '../../core/pipe/direction.pipe';
 import {ContactsComponent} from './contacts/contacts.component';
 import {AddContactDialogComponent} from './contacts/add-contact-dialog/add-contact-dialog.component';
+import {CreateGroupDialogComponent} from './contacts/create-group-dialog/create-group-dialog.component';
 const routes: Routes = [
   {
     path: '',
@@ -52,6 +53,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+    CreateGroupDialogComponent,
     ContactsComponent,
     TwemojiTextModuleComponent,
     ChatPageComponent,

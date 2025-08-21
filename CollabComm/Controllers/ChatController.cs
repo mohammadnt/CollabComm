@@ -264,16 +264,6 @@ public class ChatController : BaseController
         return new ResultSet<object>(messages);
     }
 
-
-    [HttpPost]
-    public async Task<ResultSet<object>> CreateGroup([FromBody] TitleRequestDTO request,
-        CancellationToken cancellationToken = default)
-    {
-        var conv = await _chatService.CreateGroup(App.UserIdGuid, request.title, cancellationToken);
-        return new ResultSet<object>(
-            new { conversations = new List<ConversationInfo>() { conv } });
-    }
-
     [HttpPost]
     public async Task<ResultSet<object>> AddToGroup([FromBody] AddToGroupRequestDTO request,
         CancellationToken cancellationToken = default)
@@ -361,11 +351,24 @@ public class ChatController : BaseController
     }
 
     [HttpPost]
+    public async Task<ResultSet<object>> CreateGroup([FromBody] CreateGroupRequestDTO request,
+        CancellationToken cancellationToken = default)
+    {
+        var oldUser = await _userService.GetUser(request.username, cancellationToken);
+        if (oldUser != null)
+            return new ResultSet<object>() { code = ResponseCodes.WrongArgument };
+        var user = await _chatService.CreateGroup(App.UserIdGuid, request.username, request.title, request.user_ids,
+            cancellationToken);
+        return new ResultSet<object>(new { user });
+    }
+
+
+    [HttpPost]
     public async Task<ResultSet<object>> AddContact([FromBody] TitleTitleRequestDTO request,
         CancellationToken cancellationToken = default)
     {
         var user = await _userService.GetUser(request.title, cancellationToken);
-        if (user == null) 
+        if (user == null)
             return new ResultSet<object>() { code = ResponseCodes.WrongArgument };
         var oldContact = await _chatService.GetContact(App.UserIdGuid, user.id, cancellationToken);
         if (oldContact != null)

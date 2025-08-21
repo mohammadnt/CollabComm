@@ -11,6 +11,7 @@ import {BaseResult} from '../../../models/BaseResult';
 import {endpoint} from '../../../core/cookie-utils';
 import {faAdd, faXmark} from '@fortawesome/free-solid-svg-icons';
 import {AddContactDialogComponent} from './add-contact-dialog/add-contact-dialog.component';
+import {CreateGroupDialogComponent} from './create-group-dialog/create-group-dialog.component';
 
 @Component({
   selector: 'app-contacts',
@@ -72,6 +73,20 @@ export class ContactsComponent extends BaseComponent implements OnInit, OnDestro
     viewer.afterClosed().subscribe(async (result: any) => {
       if (result) {
         this.refresh();
+      }
+    });
+  }
+
+  onCreateGroup() {
+    const viewer = this.dialog.open(CreateGroupDialogComponent, {
+      data: {},
+      height: '100vh',
+      width: '100vw',
+      maxWidth: '100vw',
+    });
+    viewer.afterClosed().subscribe(async (result: any) => {
+      if (result) {
+        this.router.navigate(['chat', result]);
       }
     });
   }

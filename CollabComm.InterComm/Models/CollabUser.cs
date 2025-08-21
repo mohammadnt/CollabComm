@@ -15,7 +15,7 @@ public class CollabUser : IEntity<Guid>
 
     public string? last_name { get; set; }
 
-    public string password { get; set; }
+    public string? password { get; set; }
     public string username { get; set; }
     public int type { get; set; }
     public long last_message_counter { get; set; }

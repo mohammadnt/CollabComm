@@ -71,7 +71,7 @@ export class AddContactDialogComponent extends BaseComponent implements OnInit {
     const title = this.addFormData['title']?.value.trim() as string;
     this.baseRestService.addContact(username, title)
       .pipe(first())
-      .subscribe((d: BaseResult<{ token: string, user: CollabUserInfo }>) => {
+      .subscribe((d: BaseResult<boolean>) => {
           if (d.code === ResultStatusCode.WrongArgument) {
             this.error = 'Username does not exist.';
             this.submitClick = false;
