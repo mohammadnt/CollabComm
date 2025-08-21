@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ConversationInfo, FileData, MessageInfo} from '../../../../models/ChatModels';
 import {endpoint} from '../../../../core/cookie-utils';
-import {faSpinner, faPlay, faPause} from '@fortawesome/free-solid-svg-icons';
+import {faPlay, faPause} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-message-voice-template',
@@ -115,7 +115,6 @@ export class MessageVoiceTemplateComponent implements OnInit {
 
   }
 
-  protected readonly faSpinner = faSpinner;
   protected readonly faPlay = faPlay;
   protected readonly faPause = faPause;
 }

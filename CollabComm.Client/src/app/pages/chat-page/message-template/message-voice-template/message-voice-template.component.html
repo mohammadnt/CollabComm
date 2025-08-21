@@ -34,7 +34,7 @@
     <button class="play-btn" [ngClass]="{'incoming' : !message?.is_sender , 'outgoing' : message?.is_sender}"
             (click)="onPlayBtn()">
       <ng-container *ngIf="!isLoaded">
-        <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faSpinner"/>
+        <mat-spinner class="d-flex justify-content-center align-items-center"></mat-spinner>
       </ng-container>
 
       <ng-container *ngIf="isLoaded">

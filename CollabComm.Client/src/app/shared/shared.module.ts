@@ -29,9 +29,11 @@ import {MatButtonModule} from '@angular/material/button';
 import {PickerModule} from '../../custom-emoji-picker/src/lib/picker/picker.module';
 import {ToastrModule} from 'ngx-toastr';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
+    MatProgressSpinnerModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
     OutsideClickDirective,
@@ -60,6 +62,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
   ],
   exports: [
+    MatProgressSpinnerModule,
     OutsideClickDirective,
     FontAwesomeModule,
     ReactiveFormsModule,

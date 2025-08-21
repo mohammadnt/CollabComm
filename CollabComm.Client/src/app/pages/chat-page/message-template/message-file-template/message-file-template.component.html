@@ -43,7 +43,7 @@
             (click)="onOpenFile()">
 
       <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faArrowDown" *ngIf="!isDownloading && !isLoaded"/>
-      <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faSpinner" *ngIf="isDownloading && downloadProgress === -1"/>
+      <mat-spinner class="d-flex justify-content-center align-items-center" *ngIf="isDownloading && downloadProgress === -1"></mat-spinner>
 
       <ng-container *ngIf="isDownloading && downloadProgress !== -1">
         <div class="infinite-rotate" style="margin: -4px;">

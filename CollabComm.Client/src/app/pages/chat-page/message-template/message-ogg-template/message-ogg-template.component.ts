@@ -5,7 +5,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {ConversationInfo, FileData, MessageInfo} from '../../../../models/ChatModels';
 import {HttpEventType} from '@angular/common/http';
 import WaveSurfer from 'wavesurfer.js';
-import {faArrowDown, faSpinner, faPlay, faPause} from '@fortawesome/free-solid-svg-icons';
+import {faArrowDown, faPlay, faPause} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-message-ogg-template',
@@ -213,7 +213,6 @@ export class MessageOggTemplateComponent extends BaseComponent implements OnInit
   }
 
   protected readonly faArrowDown = faArrowDown;
-  protected readonly faSpinner = faSpinner;
   protected readonly faPlay = faPlay;
   protected readonly faPause = faPause;
 }

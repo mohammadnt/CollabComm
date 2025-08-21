@@ -43,7 +43,7 @@
             (click)="onPlayBtn()">
       <ng-container *ngIf="!isLoaded">
         <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faArrowDown" *ngIf="!isDownloading"/>
-        <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faSpinner" *ngIf="isDownloading"/>
+        <mat-spinner class="d-flex justify-content-center align-items-center" *ngIf="isDownloading"></mat-spinner>
       </ng-container>
 
       <ng-container *ngIf="isLoaded">

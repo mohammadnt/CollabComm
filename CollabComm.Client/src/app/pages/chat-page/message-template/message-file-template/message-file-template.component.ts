@@ -4,7 +4,7 @@ import {BaseComponent} from "../../../../core/classes/base-component";
 import {DomSanitizer} from '@angular/platform-browser';
 import {HttpEvent, HttpEventType} from '@angular/common/http';
 import {humanFileSize} from '../../../../core/helper/helper';
-import {faXmark, faArrowDown, faSpinner, faFile} from '@fortawesome/free-solid-svg-icons';
+import {faXmark, faArrowDown, faFile} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-message-file-template',
@@ -131,6 +131,5 @@ export class MessageFileTemplateComponent extends BaseComponent implements OnIni
 
   protected readonly faXmark = faXmark;
   protected readonly faArrowDown = faArrowDown;
-  protected readonly faSpinner = faSpinner;
   protected readonly faFile = faFile;
 }
