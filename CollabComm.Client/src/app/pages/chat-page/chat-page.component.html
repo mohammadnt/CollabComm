@@ -1,13 +1,11 @@
 <div class="main-div d-flex flex-column h-100">
   <div class="py-2" style="background: white">
-    <div class="d-flex align-items-center justify-content-start px-2">
+    <div class="app-container d-flex align-items-center justify-content-start px-2">
 
       <div class="back-wrapper d-flex justify-content-center align-items-center h-100 cursor-pointer ps-1">
         <fa-icon [icon]="faChevronLeft" (click)="onBack()"/>
       </div>
       <div class="media-wrapper d-flex justify-content-center align-items-center ms-3" (click)="goToProfile()">
-
-        <ng-container *ngIf="targetUser?.type === UserType.user">
           <div class="w-100 h-100 d-flex justify-content-center align-items-center">
             <div class="d-flex justify-content-center align-items-center media-text"
                  *ngIf="!targetUser?.media_id">
@@ -16,11 +14,6 @@
             <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(targetUser)}}"
                  *ngIf="targetUser?.media_id">
           </div>
-        </ng-container>
-        <ng-container
-          *ngIf="targetUser?.type === UserType.group || targetUser?.type === UserType.channel">
-          <img class="img-fluid simorq-img" src="assets/img/login_logo.png">
-        </ng-container>
       </div>
       <div (click)="goToProfile()">
         <div class="ms-2 name-text fw-bold">

@@ -282,7 +282,7 @@ export class ChatPageComponent extends BasePage implements OnInit, AfterViewInit
               d1.data.conversation.user = d1.data.user;
               d1.data.conversation.user_group = d1.data.user_group;
               onSuccess((d1.data.conversation));
-            }else{
+            } else {
               this.targetUser = d1.data.user;
             }
           },
@@ -1129,11 +1129,19 @@ export class ChatPageComponent extends BasePage implements OnInit, AfterViewInit
   }
 
   getHeaderName(user: CollabUserInfo | undefined) {
-    if (!user || !user.first_name || !user.last_name || user.first_name === '' || user.last_name === '') {
+    if (!user || (!user.first_name && !user.last_name)) {
       return '';
     }
+    let c1 = '';
+    let c2 = '';
+    if (user.first_name && user.first_name.length > 0) {
+      c1 = user.first_name[0];
+    }
+    if (user.last_name && user.last_name.length > 0) {
+      c2 = user.last_name[0];
+    }
 
-    return user.first_name[0] + '‌' + user.last_name[0];
+    return c1 + '‌' + c2;
   }
 
   getPhotoSrc(user: CollabUserInfo | undefined) {

@@ -32,17 +32,8 @@ export class GroupMemberComponent extends BaseComponent implements OnInit, OnDes
   ngOnDestroy() {
   }
 
-  onBackBtnFunc() {
-    this.router.navigate([`/chat/${this.id}`]);
-
-  }
 
   override ngOnInit(): void {
-    this.startTime = Date.now();
-    window.onbeforeunload = () => this.ngOnDestroy();
-    this.onBackBtn.subscribe((value) => {
-      this.onBackBtnFunc();
-    });
     this.id = this.route.snapshot.paramMap.get('id');
     this.baseRestService.groupMembers(this.id)
       .pipe(first())

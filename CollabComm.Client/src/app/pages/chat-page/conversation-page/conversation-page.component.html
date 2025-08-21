@@ -42,24 +42,14 @@
     <div *ngFor="let conversation of showingConversations" (click)="onConversation(conversation)" #scrollDiv>
       <div class="d-flex mt-2 mt-2 item-wrapper align-items-center">
         <div class="media-wrapper d-flex justify-content-center align-items-center">
-
-          <ng-container *ngIf="conversation.user?.type === UserType.user && conversation.pin > 0">
-            <img class="img-fluid simorq-img" src="assets/img/login_logo.png">
-          </ng-container>
-          <ng-container *ngIf="conversation.user?.type === UserType.user && conversation.pin === 0">
-            <div class="w-100 h-100 d-flex justify-content-center align-items-center">
-              <div class="d-flex justify-content-center align-items-center media-text"
-                   *ngIf="!conversation.user?.media_id">
-                {{ getHeaderName(conversation) }}
-              </div>
-              <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(conversation.user)}}"
-                   *ngIf="conversation.user?.media_id">
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center align-items-center media-text"
+                 *ngIf="!conversation.user?.media_id">
+              {{ getHeaderName(conversation) }}
             </div>
-          </ng-container>
-          <ng-container
-            *ngIf="conversation.user?.type === UserType.group || conversation.user?.type === UserType.channel">
-            <img class="img-fluid simorq-img" src="assets/img/login_logo.png">
-          </ng-container>
+            <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(conversation.user)}}"
+                 *ngIf="conversation.user?.media_id">
+          </div>
         </div>
         <div class="flex-grow-1 h-100 d-flex flex-column justify-content-center ms-2 flex-shrink-1">
           <div class="d-flex name-text align-items-center">
