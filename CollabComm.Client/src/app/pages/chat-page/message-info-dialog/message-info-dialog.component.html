@@ -1,0 +1,21 @@
+<div class="parent d-flex justify-content-center" (click)="onParentClick($event)">
+  <div class="app-container d-flex justify-content-center align-items-center w-100">
+    <div class="w-100">
+      <div class="wrapper my-shadow-lg d-flex flex-column justify-content-center align-items-center">
+        <div class="d-flex justify-content-end w-100">
+          <button class="my-btn dismiss-button1" (click)="onCloseBtn($event)">
+            <fa-icon [icon]="faXmark"/>
+          </button>
+        </div>
+        <div class="notification-title rtl">
+          Message Information
+        </div>
+        <div class="notification-text d-flex justify-content-around align-items-center mt-2 w-100">
+          Message Date: {{getMessageDate()}}
+          <br>
+          Message Time: {{getMessageTime()}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="app-container">
+  <div class="d-flex align-items-center justify-content-between pt-2">
+    <h3 class="view-title">Your Classmates</h3>
+    <div>
+      <fa-icon [icon]="faXmark"/>
+    </div>
+  </div>
+  <div class="item-wrapper d-flex py-2 align-items-center" *ngFor="let ug of userGroups; let i=index"
+       (click)="onItemClick(ug.user)">
+    <div class="media-wrapper">
+      <ng-container *ngIf="ug.user?.type === UserType.user">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+          <div class="d-flex justify-content-center align-items-center media-text"
+               *ngIf="!ug.user?.media_id">
+            {{ getHeaderName(ug.user) }}
+          </div>
+          <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(ug.user)}}"
+               *ngIf="ug.user?.media_id">
+        </div>
+      </ng-container>
+    </div>
+    <div class="full-name ms-2">{{ ug.user.first_name }} {{ ug.user.last_name }}</div>
+  </div>
+
+</div>

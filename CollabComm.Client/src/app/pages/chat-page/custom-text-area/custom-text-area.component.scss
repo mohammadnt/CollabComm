@@ -1,0 +1,32 @@
+img.emoji {
+  width: 14px;
+  height: 14px
+}
+
+.mydiv {
+  unicode-bidi: plaintext;
+  line-height: 20px;
+  font-family:  Arial, Roboto, "Helvetica Neue", sans-serif !important;
+  -webkit-user-modify: read-write-plaintext-only;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  -webkit-nbsp-mode: space;
+  line-break: after-white-space;
+}
+
+[contenteditable]:focus {
+  outline: 0px solid transparent;
+}
+
+[contenteditable=true] {
+  cursor: text;
+  outline: none;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+  white-space: pre-wrap;
+}

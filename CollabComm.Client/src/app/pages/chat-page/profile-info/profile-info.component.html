@@ -1,0 +1,57 @@
+<div class="app-container wrapper">
+  <div class="d-flex align-items-center justify-content-between px-2 mb-3 pt-3">
+    <div class="d-flex align-items-center">
+      <div class="media-wrapper d-flex justify-content-center align-items-center">
+
+        <ng-container *ngIf="targetUser?.type === UserType.user">
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center" (click)="onProfileImage()">
+            <div class="d-flex justify-content-center align-items-center media-text"
+                 *ngIf="!targetUser?.media_id">
+              {{ getHeaderName(targetUser) }}
+            </div>
+            <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(targetUser)}}"
+                 *ngIf="targetUser?.media_id">
+          </div>
+        </ng-container>
+        <ng-container
+          *ngIf="targetUser?.type === UserType.group || targetUser?.type === UserType.channel">
+          <img class="img-fluid simorq-img" src="assets/img/login_logo.png">
+        </ng-container>
+      </div>
+      <div>
+        <div class="ms-2 name-text fw-bold">
+          <b>{{ targetUser?.first_name }} {{targetUser?.last_name}}</b></div>
+        <div class="ms-2 chat-with-mates" *ngIf="targetUser?.type === UserType.group">Click and Chat with Classmates
+        </div>
+      </div>
+    </div>
+    <div>
+      <fa-icon class="close-btn cursor-pointer" (click)="onClose()" [icon]="faXmark"/>
+    </div>
+  </div>
+  <div class="">
+    <h5>Mutual Groups</h5>
+    <div class="item-wrapper d-flex py-2 align-items-center" *ngFor="let groupUser of commonGroups; let i=index"
+         (click)="onItemClick(groupUser)">
+      <div class="media-wrapper-item d-flex justify-content-center align-items-center ms-3">
+        <ng-container *ngIf="groupUser.type === UserType.user">
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center align-items-center media-text"
+                 *ngIf="!groupUser?.media_id">
+              {{ getHeaderName(groupUser) }}
+            </div>
+            <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(groupUser)}}"
+                 *ngIf="groupUser?.media_id">
+          </div>
+        </ng-container>
+        <ng-container
+          *ngIf="groupUser?.type === UserType.group || groupUser?.type === UserType.channel">
+          <img class="img-fluid simorq-img-items" src="assets/img/login_logo.png">
+        </ng-container>
+      </div>
+      <div class="full-name ms-2">{{ groupUser.first_name }} {{groupUser.last_name}}</div>
+    </div>
+
+  </div>
+
+</div>

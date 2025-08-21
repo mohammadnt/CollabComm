@@ -1,0 +1,287 @@
+<div class="main-div d-flex flex-column h-100">
+  <div class="py-2" style="background: white">
+    <div class="d-flex align-items-center justify-content-start px-2">
+
+      <div class="back-wrapper d-flex justify-content-center align-items-center h-100 cursor-pointer ps-1">
+        <fa-icon [icon]="faChevronLeft" (click)="onBack()"/>
+      </div>
+      <div class="media-wrapper d-flex justify-content-center align-items-center ms-3" (click)="goToProfile()">
+
+        <ng-container *ngIf="targetUser?.type === UserType.user">
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center align-items-center media-text"
+                 *ngIf="!targetUser?.media_id">
+              {{ getHeaderName(targetUser) }}
+            </div>
+            <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(targetUser)}}"
+                 *ngIf="targetUser?.media_id">
+          </div>
+        </ng-container>
+        <ng-container
+          *ngIf="targetUser?.type === UserType.group || targetUser?.type === UserType.channel">
+          <img class="img-fluid simorq-img" src="assets/img/login_logo.png">
+        </ng-container>
+      </div>
+      <div (click)="goToProfile()">
+        <div class="ms-2 name-text fw-bold">
+          <b>{{ getTargetFirstName() }}</b></div>
+        <div class="ms-2 chat-with-mates" *ngIf="targetUser?.type === UserType.group">Click and Chat with Classmates
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  <div>-->
+  <!--    <h3 classes="view-title">Chat</h3>-->
+  <!--  </div>-->
+  <div class="message-chat-container flex-grow-1 messages-wrapper pb-2" style=""
+       (drop)="onDrop($event)" (dragover)="onDragOver($event)" #messagesWrapper
+       (scroll)="onScroll($event)">
+    <div *ngFor="let message of messages;let k = index" [attr.data-messageid]="message.id">
+      <div class="d-flex align-items-end h-100">
+        <ng-container
+          *ngIf="targetUser?.type === UserType.group && message.to_id !== selfId && message.type !== MessageType.system_message">
+          <ng-container *ngIf="!message.fakeData">
+            <ng-container *ngIf="getUser(message?.to_id) as user">
+              <div class="media-message-wrapper d-flex justify-content-center align-items-center"
+                   (click)="OnProfilePic(message)">
+                <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+                  <div class="d-flex justify-content-center align-items-center media-text"
+                       *ngIf="!user?.media_id">
+                    {{ getHeaderName(user) }}
+                  </div>
+                  <img class="w-100 h-100 object-fit-cover" src="{{getPhotoSrc(user)}}"
+                       *ngIf="user?.media_id">
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <div class="flex-grow-1 position-relative h-100 mx-1" [ngClass]="{'centered-message': message.type === MessageType.system_message,
+               'incoming' : !message.is_sender,
+               'outgoing' : message.is_sender}">
+
+
+          <div class="message-wrapper mt-2 unselectable d-flex flex-column"
+               (contextmenu)="onRightClick($event,message)"
+               [ngClass]="{'grow-in-width' : isImageWidthGreater(message) === 1 , 'grow-in-height' : isImageWidthGreater(message) === 2}"
+               (dblclick)="onRightClick($event,message)">
+
+            <div
+              class="in-group-name-wrapper d-flex align-items-center additional-msg-title mt-2 me-2 ms-2 flex-shrink-0"
+              *ngIf="targetUser?.type === UserType.group && message?.to_id !== selfId && !message.fakeData">
+              <div class="d-flex align-items-start name-in-group"
+                   *ngIf="!message?.fakeData">{{ getUser(message?.to_id)?.first_name }} {{ getUser(message?.to_id)?.last_name }}
+              </div>
+            </div>
+            <div class="d-flex reply-wrapper mt-2 flex-shrink-0" *ngIf="message.reply_id"
+                 (click)="onReplyClick(message)">
+              <div class="reply-line">
+
+              </div>
+              <div class="multi-dir-div">
+                <div class="additional-msg-title">{{ getFulleName(getUserOfReplied(message)) }}</div>
+                <div class="additional-msg-content">
+                  <app-twemoji-text-module [isOneLine]="true"
+                                           [value]="getMessageSummary(getMessage(message.reply_id), targetConversation,undefined)">
+                  </app-twemoji-text-module>
+                </div>
+
+              </div>
+            </div>
+            <div class="d-flex forward-wrapper align-items-stretch mt-2 flex-shrink-0"
+                 *ngIf="message.forward_id && message.forward_user_id"
+                 (click)="chatWithUser(message.forward_user_id)">
+              <div class="forward-line">
+
+              </div>
+              <div class="">
+                <div class="additional-msg-title">Forward Message</div>
+                <div class="additional-msg-content">{{ getFulleName(getUserOfForwardedMessage(message)) }}</div>
+              </div>
+            </div>
+            <div class="flex-shrink-1 flex-grow-1">
+              <ng-container
+                *ngIf="message.type == MessageType.text">
+                <app-message-text-template [message]="message"
+                                           [conversation]="targetConversation"
+                                           [isGroup]="(targetUser?.type ?? 0) === UserType.group"></app-message-text-template>
+              </ng-container>
+              <ng-container *ngIf="message.type == MessageType.system_message"
+                            style="overflow-wrap: anywhere;">
+                <app-message-system-template [user]="targetUser" [conversation]="targetConversation"
+
+                                             [conversation]="targetConversation"
+                                             [senderUser]="getUser(message?.to_id)"
+                                             [message]="message"></app-message-system-template>
+              </ng-container>
+              <ng-container *ngIf="message.type == MessageType.voice">
+                <app-message-voice-template [message]="message"
+                                            [conversation]="targetConversation"
+                                            [isGroup]="(targetUser?.type ?? 0) === UserType.group"></app-message-voice-template>
+              </ng-container>
+              <ng-container *ngIf="message.type == MessageType.file">
+                <app-message-file-template [message]="message"
+                                           (onCancelUpload)="cancelUpload($event)"
+                                           [conversation]="targetConversation"
+                                           [isGroup]="(targetUser?.type ?? 0) === UserType.group"></app-message-file-template>
+              </ng-container>
+              <ng-container *ngIf="message.type == MessageType.voice_ogg">
+                <app-message-ogg-template [message]="message"
+                                          [conversation]="targetConversation"
+                                          [isGroup]="(targetUser?.type ?? 0) === UserType.group"></app-message-ogg-template>
+              </ng-container>
+              <ng-container *ngIf="message.type == MessageType.image">
+                <app-message-image-file-template class="h-100" [message]="message"
+                                                 [selfId]="selfId"
+                                                 [conversation]="targetConversation"
+                                                 [isGroup]="(targetUser?.type ?? 0) === UserType.group"></app-message-image-file-template>
+              </ng-container>
+            </div>
+          </div>
+          <app-message-tail [message]="message"></app-message-tail>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-container" *ngIf="!targetUser || targetUser?.type !== UserType.channel">
+    <div class="m-2 mt-0" style="background: white;border-radius: 12px">
+      <div class="d-flex reply-menu w-100 align-items-center" *ngIf="isReply" style="">
+        <fa-icon [icon]="faReply"/>
+        <div class="flex-grow-1" style="overflow: hidden">
+          <div>{{ getReplyMenuName(additionalMessageInfo) }}</div>
+          <div class="multi-dir-div">
+            <app-twemoji-text-module [isOneLine]="true"
+                                     [value]="getMessageSummary(additionalMessageInfo, targetConversation,undefined)"></app-twemoji-text-module>
+          </div>
+        </div>
+
+        <button class="my-btn p-2" (click)="onCloseReply()"><fa-icon [icon]="faXmark"/></button>
+
+      </div>
+      <div class="d-flex reply-menu w-100 align-items-center" *ngIf="!!forwardMessage" style="">
+        <fa-icon [icon]="faReply"/>
+        <div class="flex-grow-1" style="overflow: hidden">
+          <div>Forward Message</div>
+          <app-twemoji-text-module [isOneLine]="true"
+                                   [value]="getMessageSummary(forwardMessage, undefined,undefined)"></app-twemoji-text-module>
+        </div>
+
+        <button class="my-btn p-2" (click)="onCloseForward()"><fa-icon [icon]="faXmark"/></button>
+
+      </div>
+      <div class="w-100 d-flex align-items-end ">
+        <div class="emoji-btn-wrapper mb-3 ms-2 position-relative">
+          <button class="my-btn emoji-btn d-flex justify-content-center align-items-center"
+                  #emojiBtn
+                  (click)="onEmojiBtn(emojiBtn)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+              <g fill="#868686">
+                <path
+                  d="M16 10.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5s.448-1.5 1-1.5s1 .672 1 1.5Zm-6 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S8.448 9 9 9s1 .672 1 1.5Z"/>
+                <path fill-rule="evenodd"
+                      d="M12 2.75a9.25 9.25 0 0 0-.75 18.47c.002-1.488.016-2.593.14-3.502a5.787 5.787 0 0 1-2.837-1.116a.75.75 0 1 1 .894-1.204a4.276 4.276 0 0 0 2.31.845a7.75 7.75 0 0 1 4.683-4.558c1.147-.401 2.523-.433 4.78-.435A9.25 9.25 0 0 0 12 2.75Zm9.14 10c-2.257.006-3.336.047-4.204.35a6.25 6.25 0 0 0-3.835 3.836c-.304.868-.345 1.947-.35 4.203l8.388-8.388ZM1.25 12C1.25 6.063 6.063 1.25 12 1.25S22.75 6.063 22.75 12c0 .362-.018.72-.053 1.074l-.026.267l-9.33 9.33l-.267.026c-.353.035-.712.053-1.074.053c-5.937 0-10.75-4.813-10.75-10.75Z"
+                      clip-rule="evenodd"/>
+              </g>
+            </svg>
+
+          </button>
+          <emoji-mart *ngIf="isWidthGreaterThan500()" [showPreview]="false" [set]="'apple'"
+                      [enableSearch]="false"
+                      (emojiClick)="addEmoji($event)" [ngClass]="{'d-none' : !showEmojiDesktop}"
+                      [darkMode]="false" [style]="{ position: 'absolute', bottom: '24px', left: '24px' }"></emoji-mart>
+        </div>
+
+        <div class="textarea-wrapper flex-grow-1 align-self-stretch d-flex align-items-center ms-2"
+             style="flex: 1">
+          <app-rich-text-area class="w-100" #richTextArea (onFocusIn)="onTextAreaFocusIn()"
+                              [(value)]="messageTextString" [disabled]="!!forwardMessage"
+                              [placeholder]="'Message'"></app-rich-text-area>
+        </div>
+        <div class="mb-2 mx-2 " *ngIf="recordingTimeString !== ''">
+          {{ recordingTimeString }}
+        </div>
+        <button
+          class="mb-2 mt-2 send-btn cursor-pointer d-flex justify-content-center align-items-center mx-2"
+          (click)="sendTextMsg()" *ngIf="getSendMessageText() !== '' || !!forwardMessage">
+          <fa-icon [icon]="faPaperPlane" />
+        </button>
+
+        <button class="mb-2 mt-2 my-btn mx-2 send-btn d-flex justify-content-center align-items-center"
+                *ngIf="!isRecording && getSendMessageText() === '' && !forwardMessage"
+                (click)="onChooseFileClick($event)">
+          <fa-icon [icon]="faPaperclip" />
+        </button>
+        <button
+          class="mb-2 mt-2 send-btn cursor-pointer d-flex justify-content-center align-items-center mx-2"
+          *ngIf="isRecording"
+          (click)="onClearRecBtn($event)">
+          <div class="d-flex justify-content-center align-items-center">Clear</div>
+
+        </button>
+        <button
+          class="mb-2 mt-2 send-btn cursor-pointer d-flex justify-content-center align-items-center mx-2"
+          *ngIf="getSendMessageText() === '' && !forwardMessage"
+          [ngClass]="{'recording' : isRecording}"
+          (click)="onRecBtn($event)">
+          <div class="d-flex justify-content-center align-items-center">{{ isRecording ? 'Send' : 'Rec' }}</div>
+
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="chat-container bottom-emoji-mart-wrapper" #emojiPicker *ngIf="isWidthGreaterThan500() === false">
+    <div
+      [ngClass]="{'invisible-emoji-mart' : !showEmojiMobile}">
+      <emoji-mart class="" [showPreview]="false" [set]="'apple'" (emojiClick)="addEmoji($event)"
+                  [enableSearch]="false" [darkMode]="false"></emoji-mart>
+    </div>
+
+  </div>
+
+  <input class="hidden-input-file" type="file" id="attach_file" #attachFileInput
+         [multiple]="true"
+         (change)="handleAttachFileInput($event)" (click)="onInputClick($event)">
+  <input class="hidden-input-file" type="file" id="image-file-input" accept="image/png, image/gif, image/jpeg"
+         #attachImageFileInput
+         (change)="handleImageAttachFileInput($event)" (click)="onInputClick($event)">
+  <!-- an hidden div is created to set the position of appearance of the menu-->
+  <div style="visibility: hidden; position: fixed;"
+       [style.left]="menuTopLeftPosition.x"
+       [style.top]="menuTopLeftPosition.y"
+       [matMenuTriggerFor]="menu"></div>
+</div>
+
+<!-- standard material menu -->
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent let-item="item">
+    <ng-container *ngIf="matMenuType === 1">
+      <div class="d-flex flex-column context-wrapper">
+        <button class="my-btn menu-btn" (click)="onReply(item)" *ngIf="!item.fakeData">Reply</button>
+        <button class="my-btn menu-btn" (click)="onCopy(item)">Copy</button>
+        <button class="my-btn menu-btn" (click)="onDelete(item)" *ngIf="!item.fakeData &&
+
+         (targetUser?.type === UserType.user || item.to_id === selfId || usergroup?.is_admin || usergroup?.is_owner)
+">Delete
+        </button>
+        <button class="my-btn menu-btn" (click)="onInfo(item)" *ngIf="!item.fakeData">Info</button>
+        <button class="my-btn menu-btn" (click)="onForward(item)" *ngIf="!item.fakeData">Forward
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="matMenuType === 2">
+      <div class="context-wrapper">
+
+        <button class="my-btn menu-btn" (click)="onSendFileClick()">Send File</button>
+        <button class="my-btn menu-btn" (click)="onSendImageClick()">Send Image</button>
+
+      </div>
+    </ng-container>
+  </ng-template>
+</mat-menu>
+
+<ng-template cdkPortal>
+  <div class="drag-drop-overlay-wrapper" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+    <div class="drag-drop-overlay">Drop your files here to upload.</div>
+  </div>
+</ng-template>

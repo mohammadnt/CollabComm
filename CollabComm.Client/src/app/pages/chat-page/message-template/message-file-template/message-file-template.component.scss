@@ -1,0 +1,58 @@
+@import '../../../../shared/variables';
+
+.wrapper{
+  padding-top: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.upload-percent{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.open-file{
+  border: none;
+  border-radius: 23px;
+  width: 36px;
+  height: 36px;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+.outgoing{
+  &.open-file{
+    background: $outgoing-dark;
+    color: #effdde;
+  }
+  .upload-percent{
+    color: #effdde;
+  }
+}
+
+.incoming{
+  &.open-file{
+    background: #40a7e3;
+    color: #ffffff;
+  }
+  .upload-percent{
+    color: #ffffff;
+  }
+}
+.name-wrapper{
+  color: black;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
+  line-height: 1rem;
+  font-size: 0.8rem;
+}

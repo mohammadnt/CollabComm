@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#fff">
+
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-touch-fullscreen" content="yes"/>
+  <meta name="apple-mobile-web-app-title" content="TestStore"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no, viewport-fit=cover">
+  <title>CollabComm Offline Page</title>
+  <style>
+
+    body {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      min-height: 100vh;
+      /*overflow: hidden;*/
+      box-sizing: border-box;
+      display: block;
+    }
+    .img-fluid{
+      max-width: 100%;
+      height: auto;
+    }
+    .astronaut{
+      max-width: 80%;
+      margin-top: 5rem;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 544px !important;
+      --bs-gutter-x: 4rem !important;
+      --bs-gutter-y: 0;
+      padding-right: calc(var(--bs-gutter-x) * .5);
+      padding-left: calc(var(--bs-gutter-x) * .5);
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .app-container-fluid {
+      width: 100%;
+      max-width: 544px !important;
+      --bs-gutter-x: 4rem !important;
+      --bs-gutter-y: 0;
+      padding-right: 0;
+      padding-left: 0;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    @media (max-width: 500px) {
+      .app-container {
+        --bs-gutter-x: 4rem !important;
+        --bs-gutter-y: 0;
+        width: 100% !important;
+        padding-right: calc(var(--bs-gutter-x) * .5);
+        padding-left: calc(var(--bs-gutter-x) * .5);
+        margin-right: auto;
+        margin-left: auto;
+      }
+      .app-container-fluid {
+        --bs-gutter-x: 4rem !important;
+        --bs-gutter-y: 0;
+        width: 100% !important;
+        padding-right: 0;
+        padding-left: 0;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+    }
+
+    .my-btn {
+      border: none;
+      background: none;
+      padding: 0;
+      color: black;
+    }
+    *, ::after, ::before {
+      box-sizing: border-box;
+    }
+    .h-100 {
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+<div class="app-container h-100">
+  <div class="h-100" style="display: flex; flex-direction: column; justify-content: center;align-items: center;">
+    <div><div style="font-size: 2.2rem;font-weight: bold;margin-top: 0.5rem">You Are Offline</div></div>
+    <div><button class="my-btn" style="margin-top: 3rem" type="button">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <path d="M10.3264 27.6685C12.59 30.1639 15.9111 31.7374 19.5305 31.7374C26.2721 31.7374 31.7372 26.2723 31.7372 19.5308C31.7372 19.013 31.705 18.5033 31.6427 18.0034C31.5592 17.3344 32.0339 16.7245 32.7029 16.6411C33.3719 16.5577 33.9818 17.0323 34.0652 17.7013C34.14 18.3011 34.1785 18.9117 34.1785 19.5308C34.1785 27.6206 27.6204 34.1787 19.5305 34.1787C15.4276 34.1787 11.6457 32.4903 8.95145 29.7661V32.9581C8.95145 33.6322 8.40494 34.1787 7.73078 34.1787C7.05663 34.1787 6.51012 33.6322 6.51012 32.9581V27.2616C6.51012 26.138 7.42097 25.2272 8.54456 25.2272H14.241C14.9151 25.2272 15.4616 25.7737 15.4616 26.4479C15.4616 27.122 14.9151 27.6685 14.241 27.6685H10.3264Z" fill="black"/>
+          <path d="M7.4184 21.0581C7.50182 21.7271 7.02713 22.337 6.35816 22.4205C5.68919 22.5039 5.07925 22.0292 4.99583 21.3602C4.92104 20.7604 4.88257 20.1498 4.88257 19.5308C4.88257 11.4409 11.4407 4.88281 19.5305 4.88281C23.6432 4.88281 27.4334 6.57934 30.1289 9.31499V6.10348C30.1289 5.42932 30.6754 4.88281 31.3495 4.88281C32.0237 4.88281 32.5702 5.42932 32.5702 6.10348V11.7999C32.5702 12.9235 31.6594 13.8343 30.5358 13.8343H24.8393C24.1652 13.8343 23.6187 13.2878 23.6187 12.6137C23.6187 11.9395 24.1652 11.393 24.8393 11.393H28.7346C26.471 8.89767 23.15 7.32414 19.5305 7.32414C12.789 7.32414 7.32389 12.7892 7.32389 19.5308C7.32389 20.0486 7.35607 20.5583 7.4184 21.0581Z" fill="black"/>
+        </svg>
+        <div style="text-decoration: underline;font-size: 1.2rem; font-weight: bold">Reload</div>
+      </div>
+    </button></div>
+  </div>
+</div>
+<script>
+  // Manual reload feature.
+  document.querySelector("button").addEventListener("click", () => {
+    window.location.reload();
+  });
+
+  // Listen to changes in the network state, reload when online.
+  // This handles the case when the device is completely offline.
+  window.addEventListener('online', () => {
+    window.location.reload();
+  });
+
+  // Check if the server is responding and reload the page if it is.
+  // This handles the case when the device is online, but the server
+  // is offline or misbehaving.
+  async function checkNetworkAndReload() {
+    try {
+      const response = await fetch('.');
+      // Verify we get a valid response from the server
+      if (response.status >= 200 && response.status < 500) {
+        window.location.reload();
+        return;
+      }
+    } catch {
+      // Unable to connect to the server, ignore.
+    }
+    window.setTimeout(checkNetworkAndReload, 2500);
+  }
+
+  checkNetworkAndReload();
+</script>
+</body>
+</html>

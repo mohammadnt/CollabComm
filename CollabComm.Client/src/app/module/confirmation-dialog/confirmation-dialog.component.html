@@ -1,0 +1,14 @@
+<div class="parent d-flex justify-content-center" (click)="onParentClick($event)">
+  <div class="app-container d-flex justify-content-center align-items-center">
+    <div class="w-100">
+      <div class="dialog-wrapper my-shadow-lg">
+        <h3 md-dialog-title>Delete</h3>
+        <div class="title" [ngClass]="confirmMessage | direction" md-dialog-content>{{confirmMessage}}</div>
+        <div class="d-flex mt-2" md-dialog-actions>
+          <button md-button class="my-btn confirm-btn" (click)="onConfirmClick($event)">Confirm</button>
+          <button md-button class="my-btn cancel-btn ms-3" (click)="onCancelClick($event)">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

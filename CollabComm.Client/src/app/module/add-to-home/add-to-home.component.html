@@ -1,0 +1,39 @@
+<div class="wrapper">
+  <div class="h-100 d-flex flex-column">
+    <div class="flex-grow-1"></div>
+    <div class="main-modal" #modalHeart [ngStyle]="{'height': content.offsetHeight + 'px'}">
+      <div
+        class="app-container h-100 w-100 d-flex flex-column justify-content-start align-items-center finish-page-wrapper position-absolute top-0 start-0 end-0 bottom-0"
+        #content (click)="onClose()">
+        <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+          <img class="logo-img" src="../../../../assets/img/icon/logo%20new.png">
+          <div class="fw-bold mt-1" style="font-family: Arial"><span
+            style="color: #323840;font-size: 1.5rem">Join the </span><span style="color: #f5c518;font-size: 1.5rem">New World</span>
+          </div>
+          <div style="color: #434e5b; font-family: MjDinarOneLight;font-size: 1.1rem">اپلیکیــــشن اســـــمارت
+            بیــــــان برتر
+          </div>
+        </div>
+        <div class="item-text flex-grow-1 rtl mt-4" style="line-height: 1.6rem" *ngIf="data.isForNotification">برای
+          داشتن نوتیفیکشن روی سیستم عامل های iOS و iPadOS نیاز به انجام عملیت زیر است. پس از انجام این عملیات اپ را از
+          روی صفحه اصلی اجرا کنید و دکمه نوتیفیکشن را بزنید.
+        </div>
+        <div class="flex-grow-1 d-flex flex-column justify-content-center w-100 mt-5">
+          <div class="d-flex mnt-3">
+            <div class="item-text flex-grow-1 rtl">در نوار پایین روی دکمه Share کلیک کن</div>
+            <div class="item-icon"><img class="ic-img" src="../../../../assets/img/icon/ic_share_to_home.png"></div>
+          </div>
+          <div class="d-flex mt-3">
+            <div class="item-text flex-grow-1 rtl">داخل منویی که باز شد، گزینه<br>Add to Home Screen رو انتخاب کن.</div>
+            <div class="item-icon"><img class="ic-img" src="../../../../assets/img/icon/ic_add_to_home.png"></div>
+          </div>
+          <div class="d-flex mt-3">
+            <div class="item-text flex-grow-1 rtl">در قسمت بالا روی Add کلیک کن.</div>
+            <div class="item-icon fw-bold me-1" style="font-family: MjDinarOneLight">Add</div>
+          </div>
+        </div>
+        <button class="my-btn got-it-btn w-100 mb-5" (click)="onClose()">Got it</button>
+      </div>
+    </div>
+  </div>
+</div>

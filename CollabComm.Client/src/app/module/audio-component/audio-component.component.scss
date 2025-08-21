@@ -1,0 +1,32 @@
+video::-webkit-media-text-track-display {
+  display: none;
+}
+
+.full-screen {
+  width: calc(100%);
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin: 0 auto;
+}
+.bordered-video{
+  border: solid 1px #cccccc;
+}
+.full-screen-aspect-ratio {
+  aspect-ratio: 414/231.25;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 3rem;
+  color: white;
+}
+
+.overlay {
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.6);
+}

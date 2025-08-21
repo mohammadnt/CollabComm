@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <h1>{{data.title}}</h1>
+  <div class="d-flex justify-content-center">
+    <div class="progress-wrapper infinite-rotate" style="margin: -4px;">
+      <round-progress
+
+        [current]="0.5"
+        [max]="1"
+        [color]="'orange'"
+        [background]="'transparent'"
+        [radius]="125"
+        [stroke]="20"
+        [semicircle]="false"
+        [rounded]="true"
+        [clockwise]="true"
+        [responsive]="true"
+        [duration]="1"
+        [animation]="'easeInOutQuart'"
+        [animationDelay]="0"
+        (onRender)="onRender($event)"></round-progress>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+
+.chat-textarea::placeholder {
+  color: rgba(0, 0, 0, 0.18);
+}
+
+.chat-textarea {
+  max-height: 100px;
+  overflow-y: scroll;
+  border: none;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none; /*remove the resize handle on the bottom right*/
+}
+
+.chat-textarea::-webkit-scrollbar {
+  display: none;
+
+}
+
+.text-area-buttons {
+  width: 100vw;
+  --bs-gutter-x: 4rem !important;
+  max-width: calc(544px - var(--bs-gutter-x)) !important;
+
+  padding-left: 10px;
+
+
+  min-height: 40px;
+  font-weight: 400;
+  position: absolute;
+  bottom: 86%;
+
+  left: 50%;
+  transform: translateX(-50%);;
+
+  //transform: translate(-20%);
+  //-webkit-transform: translate(-20%) !important;
+  color: #a1a1a1;
+  font-size: 0.8rem;
+  z-index: 4;
+  text-align: center;
+}
+.text-area-button{
+  background: #fafafa;
+  border: solid 1px #ffc100;
+  border-radius: 12px;
+}
+//.tooltip-overlay {
+//  position: fixed;
+//  width: 100vw;
+//  height: 100vh;
+//  left: 0;
+//  right: 0;
+//  bottom: 0;
+//  top: 0;
+//  background: rgba(0, 0, 0, 0.2);
+//  z-index: 3;
+//}

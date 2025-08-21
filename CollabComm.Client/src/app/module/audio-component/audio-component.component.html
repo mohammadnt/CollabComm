@@ -1,0 +1,14 @@
+<div class="position-relative">
+  <audio [attr.src]="mediaSrc" class="full-screen full-screen-aspect-ratio" controls
+         style="max-width: 100%;height: auto"
+         [ngStyle]="{'border-radius': borderRadius + 'px'}"
+         [ngClass]="{'bordered-video': showBorder}"
+         (loadedmetadata)="onVideoLoadedData()" #audioElem (ended)="onEnded()">
+    <ng-container *ngIf="loadSubtitles">
+      <track label="English" kind="subtitles" srclang="en" [attr.src]="vttEn" default
+             (cuechange)="onEnCueChange($event);" (load)="onEnLoadedData()">
+      <track label="Persian" kind="subtitles" srclang="fa" [attr.src]="vttFa" default
+             (cuechange)="onFaCueChange($event);" (load)="onFaLoadedData()">
+    </ng-container>
+  </audio>
+</div>

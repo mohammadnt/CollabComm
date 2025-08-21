@@ -1,0 +1,17 @@
+<div class="parent position-relative" (click)="onParentClick($event)">
+
+
+  <pinch-zoom class="w-100 h-100">
+    <img class="thumb-image" [ngClass]="{'d-none' : isImageDownloaded}" *ngIf="data.thumbnailSrc"
+         [attr.src]="data.thumbnailSrc | secure | async">
+    <img [ngClass]="{'invisible' : !isImageDownloaded}"
+         [attr.src]="data.src"
+         #mainImg
+         class="main-img"
+         (load)="onMainImageLoadedMetaData()">
+  </pinch-zoom>
+
+  <div class="x-mark-wrapper d-flex cursor-pointer">
+    <i class="fa-thin fa-xmark xmark-btn" (click)="onDetailXMark()"></i>
+  </div>
+</div>

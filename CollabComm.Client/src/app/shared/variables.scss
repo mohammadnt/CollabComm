@@ -1,0 +1,61 @@
+$primary: #01bee8;
+$secondary: #494747;
+
+$mobile-size: 680px;
+$tablet-size: 770px;
+$my-light-blue: #5dbaee;
+$my-light-blue2: #5cbbf1;
+$my-purple: purple;
+$my-gray: #ededed;
+$my-gray2: #cccccc;
+$my-gray3: #adadad;
+$my-gray4: #b8b8b8;
+$my-gray5: #6c717d;
+$my-gray6: #919191;
+$border-color: #bcbcbc;
+$my-magenta: #c55d7b;
+
+$background-dark: #1c1c1c;
+$linkColor-dark: #356dfa;
+$secondary-dark: #808080;
+
+$primary-dark: #ffffff;
+
+$outgoing-dark: #34a54c;
+$incoming-dark: #2786e7;
+$outgoing-light: #bbe9ad;
+$incoming-light: #d0e6fa;
+$yellow: #f5c518;
+$total-nav-height: 52px;
+$body-background: #f6f6f6;
+
+@mixin placeholder($color,$opacity, $size:"") {
+  &::-webkit-input-placeholder {
+    color: $color;
+    opacity: $opacity;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &:-moz-placeholder {
+    color: $color;
+    opacity: $opacity;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &::-moz-placeholder {
+    color: $color;
+    opacity: $opacity;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    opacity: $opacity;
+    @if $size != "" {
+      font-size: $size;
+    }
+  }
+}

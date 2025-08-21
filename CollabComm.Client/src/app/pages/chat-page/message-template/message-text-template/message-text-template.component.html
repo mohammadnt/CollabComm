@@ -1,0 +1,18 @@
+<div class="message-text-wrapper" style="" *ngIf="message"
+     [ngClass]="{'centered-message': message.type === MessageType.system_message,
+               'incoming' : !message.is_sender,
+               'outgoing' : message.is_sender}">
+  <div class="position-relative" style="unicode-bidi: plaintext;">
+    <ng-container *ngIf="getProccessedText(message.text) as line">
+
+
+      <app-twemoji-text-module
+        [value]="getProccessedText(message.text)"></app-twemoji-text-module>
+
+      <span class="d-inline-block message-status-wrapper-wrapper" style="text-align: right;float: right;">
+  <app-message-status-wrapper [message]="message" [conversation]="conversation"></app-message-status-wrapper>
+</span>
+
+    </ng-container>
+  </div>
+</div>

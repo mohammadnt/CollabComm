@@ -1,0 +1,27 @@
+<div class="d-flex align-items-center justify-content-end message-status-wrapper" *ngIf="message"
+
+     [ngClass]="{'centered-message': message.type === MessageType.system_message,
+               'incoming' : !message.is_sender,
+               'outgoing' : message.is_sender}">
+  <div class="message-date ps-1">
+    {{getMessageDate(message)}}
+  </div>
+  <span class="message-status ps-1" *ngIf="message.is_sender">
+                      <ng-container *ngIf="message.is_local && message.fakeData.isFailed">
+                        <div class="d-flex justify-content-center align-items-center message-fail" style="">
+                          <fa-icon [icon]="faExclamation"/>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="message.is_local && !message.fakeData.isFailed">
+                        <img class="d-block dialog-pending" src="assets/img/pending.png">
+                      </ng-container>
+                      <ng-container
+                        *ngIf="!message.is_local && (conversation?.last_read_counter ?? 0) < message.conversation_counter">
+                        <img class="d-block dialog-check" src="assets/img/dialogs_check.png">
+                      </ng-container>
+                      <ng-container
+                        *ngIf="!message.is_local && (conversation?.last_read_counter ?? 0) >= message.conversation_counter">
+                        <img class="d-block dialog-read" src="assets/img/dialogs_read.png">
+                      </ng-container>
+  </span>
+</div>

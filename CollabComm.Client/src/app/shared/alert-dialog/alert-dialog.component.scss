@@ -1,0 +1,53 @@
+.title{
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+.subtitle{
+  font-size: 1.1rem;
+}
+.parent {
+  backdrop-filter: blur(4px);
+  height: 100%;
+  width: 100%;
+}
+
+.dialog-wrapper {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 24px;
+}
+
+.confirm-btn {
+  padding: 8px 16px;
+  border-radius: 12px;
+  color: white;
+  background: black;
+}
+
+.cancel-btn {
+  padding: 8px 16px;
+  border-radius: 12px;
+  color: black;
+  background: transparent;
+}
+
+::ng-deep {
+  .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+    opacity: 0;
+  }
+
+
+  .mat-dialog-container {
+    padding: 0px;
+    box-shadow: unset;
+  }
+
+  .mat-dialog-container {
+    background: rgba(0, 0, 0, 0) !important;
+  }
+
+}
+
+.fa-xmark{
+  font-size: 1.4rem;
+}

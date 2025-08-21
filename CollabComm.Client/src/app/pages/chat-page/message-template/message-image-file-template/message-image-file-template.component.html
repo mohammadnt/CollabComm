@@ -1,0 +1,59 @@
+﻿<div class=" d-flex flex-column wrapper h-100 d-flex flex-column"
+     [ngClass]="{'bordered' : !(isGroup && message?.to_id !== selfId) && !(message?.forward_id)}">
+
+  <div class="position-relative flex-grow-1 " #fakeWrapper
+       [ngClass]="{'mt-2' : (message?.to_id !== selfId && isGroup) || !!message?.forward_id || !!message?.reply_id}"
+       [ngStyle]="{'aspect-ratio' : getImageAspectRatio()}">
+
+
+    <div class="image-wrapper position-absolute inset-0"
+
+         [ngClass]="{                 'grow-in-width' : isWidthGreater() === 1 , 'grow-in-height' : isWidthGreater() === 2 }">
+      <div class="w-100 h-100  position-relative">
+        <img class="thumb-image" [ngClass]="{'d-none' : isImageDownloaded}" *ngIf="message?.media_id"
+             [attr.src]="getThumbnailMediaSrc() | secure | async" (click)="onClickImage()">
+
+
+        <img class="main-image cursor-pointer" [ngClass]="{'invisible' : !isImageDownloaded}"
+             [attr.src]="getMediaSrc() | secure | async" (click)="onClickImage()"
+             (load)="onMainImageLoadedMetaData()">
+        <div class="d-flex align-items-center justify-content-center position-absolute inset-0"
+             *ngIf="!!message?.fakeData">
+          <div class="progress-wrapper position-relative">
+            <div class="infinite-rotate">
+
+              <round-progress
+                [current]="message?.fakeData?.uploadRatio ?? 0"
+                [max]="1"
+                [color]="'white'"
+                [background]="'transparent'"
+                [radius]="125"
+                [stroke]="20"
+                [semicircle]="false"
+                [rounded]="true"
+                [clockwise]="true"
+                [responsive]="true"
+                [duration]="800"
+                [animation]="'easeInOutQuart'"
+                [animationDelay]="0"
+                (onRender)="onRender($event)"></round-progress>
+            </div>
+            <div class="upload-percent">
+              {{((message?.fakeData?.uploadRatio ?? 0) * 100).noFractionDigit()}}<span
+              style="font-size: 0.5rem"> %</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="image-wrapper flex-shrink-1" style="height: 0px;"
+       [ngStyle]="{'width': getWidth(fakeWrapper)}"></div>
+
+
+  <div style="text-align: right;">
+    <app-message-status-wrapper [message]="message" [conversation]="conversation"></app-message-status-wrapper>
+  </div>
+</div>

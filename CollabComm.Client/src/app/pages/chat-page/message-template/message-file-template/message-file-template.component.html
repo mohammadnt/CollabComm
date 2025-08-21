@@ -1,0 +1,87 @@
+<div class="wrapper">
+  <div class="d-flex align-items-start" *ngIf="!!message?.fakeData">
+    <button class="open-file position-relative"
+            [ngClass]="{'incoming' : !message?.is_sender , 'outgoing' : message?.is_sender}"
+            (click)="onOpenFile()">
+      <div class="infinite-rotate" style="margin: -4px;">
+        <round-progress
+
+          [current]="message?.fakeData?.uploadRatio ?? 0"
+          [max]="1"
+          [color]="'white'"
+          [background]="'transparent'"
+          [radius]="125"
+          [stroke]="20"
+          [semicircle]="false"
+          [rounded]="true"
+          [clockwise]="true"
+          [responsive]="true"
+          [duration]="800"
+          [animation]="'easeInOutQuart'"
+          [animationDelay]="0"
+          (onRender)="onRender($event)"></round-progress>
+      </div>
+      <div class="upload-percent" (click)="cancelUpload()">
+        <fa-icon [icon]="faXmark"/>
+      </div>
+    </button>
+    <div>
+      <div class="name-wrapper ms-2" *ngIf="fileData" style="overflow-wrap: anywhere;">
+        {{fileData.org_file_name}}
+      </div>
+      <div class="name-wrapper ms-2" *ngIf="fileData" style="overflow-wrap: anywhere;">
+        {{getFileSizeHumanReadable()}}
+      </div>
+    </div>
+
+  </div>
+  <div class="d-flex align-items-start" *ngIf="message?.media_id">
+    <a class="d-none" [href]="fileUrl" [download]="downloadName" #hiddenA>Click Me!</a>
+
+    <button class="open-file position-relative"
+            [ngClass]="{'incoming' : !message?.is_sender , 'outgoing' : message?.is_sender}"
+            (click)="onOpenFile()">
+
+      <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faArrowDown" *ngIf="!isDownloading && !isLoaded"/>
+      <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faSpinner" *ngIf="isDownloading && downloadProgress === -1"/>
+
+      <ng-container *ngIf="isDownloading && downloadProgress !== -1">
+        <div class="infinite-rotate" style="margin: -4px;">
+          <round-progress
+            [current]="downloadProgress ?? 0"
+            [max]="1"
+            [color]="'white'"
+            [background]="'transparent'"
+            [radius]="125"
+            [stroke]="20"
+            [semicircle]="false"
+            [rounded]="true"
+            [clockwise]="true"
+            [responsive]="true"
+            [duration]="800"
+            [animation]="'easeInOutQuart'"
+            [animationDelay]="0"
+            (onRender)="onRender($event)"></round-progress>
+        </div>
+        <div class="upload-percent">
+          {{((downloadProgress ?? 0) * 100).noFractionDigit()}}<span style="font-size: 0.5rem"> %</span>
+        </div>
+      </ng-container>
+      <fa-icon class="d-flex justify-content-center align-items-center"  [icon]="faFile" *ngIf="isLoaded"></fa-icon>
+    </button>
+    <div>
+      <div class="name-wrapper ms-2" *ngIf="fileData" style="overflow-wrap: anywhere;">
+        {{fileData.org_file_name}}
+      </div>
+      <div class="name-wrapper ms-2" *ngIf="fileData" style="overflow-wrap: anywhere;">
+        {{getFileSizeHumanReadable()}}
+      </div>
+    </div>
+
+  </div>
+
+  <span class="d-inline" [ngStyle]="{'width': 'calc(100% - ' + 0 + 'px - 1px)'}"
+        style="text-align: right">
+        <app-message-status-wrapper [message]="message" [conversation]="conversation"></app-message-status-wrapper>
+  </span>
+</div>

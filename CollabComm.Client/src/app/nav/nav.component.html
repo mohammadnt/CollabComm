@@ -1,0 +1,54 @@
+<nav class="app-container" *ngIf="showNav">
+  <input type="file" class="hidden-input-file" id="profile_photo_input" accept="image/png, image/gif, image/jpeg"
+         #porfilePhotoInput (change)="handlePicSelected($event)">
+  <div class="p-2" style="width: 100%;height:62px">
+    <div class="profile-pic-wrapper cursor-pointer d-flex justify-content-center align-items-center" [matMenuTriggerFor]="leftMenu">
+
+      <img class="h-100 object-fit-cover aspect-ratio-1" alt="" [src]="getPhotoSrc()" *ngIf="userData?.user?.media_id">
+      <div class="d-flex justify-content-center align-items-center profile-pic-placeholder"
+           *ngIf="!userData?.user?.media_id && !(isNullOrEmpty(appManager.firstName) && isNullOrEmpty(appManager.lastName))">
+        {{ getHeaderName() }}
+      </div>
+    </div>
+  </div>
+</nav>
+<mat-menu #leftMenu="matMenu" class="no-padding-menu">
+  <div class="info position-relative">
+    <div class="d-flex justify-content-between align-items-center p-1 cursor-pointer">
+      <div
+        class="menu-div with-seprator d-flex me-2 ms-2 cursor-pointer w-100"
+        (click)="setProfilePhoto($event)">Change Profile Picture
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center p-1 cursor-pointer" *ngIf="userData?.user?.media_id">
+      <div
+        class="menu-div with-seprator d-flex me-2 ms-2 cursor-pointer w-100"
+        (click)="deleteProfilePhoto($event)">Delete Profile Picture
+      </div>
+    </div>
+
+
+    <div class="d-flex justify-content-between align-items-center p-1" *ngIf="baseRestService.isLogin">
+      <div
+        class="menu-div with-seprator d-flex me-2 ms-2 cursor-pointer w-100"
+        (click)="onAlarmIcon()">Activate Subcription
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center p-1" *ngIf="!isSafari">
+      <div
+        class="menu-div with-seprator d-flex me-2 ms-2 cursor-pointer w-100"
+        (click)="addToHomeScreen()">Install Site
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center p-1">
+      <div
+        class="menu-div d-flex me-2 ms-2 cursor-pointer w-100"
+        (click)="logout()">Logout
+      </div>
+    </div>
+
+
+  </div>
+</mat-menu>

@@ -1,0 +1,16 @@
+.text-span {
+  //font-family: Arial, Roboto, "Helvetica Neue", sans-serif !important;
+}
+
+.message-text-wrapper {
+  line-height: 1.05rem;
+  font-size: 0.8rem;
+
+  &.outgoing {
+    padding: 4px 3px 4px 8px;
+  }
+
+  &.incoming {
+    padding: 4px 6px 4px 8px;
+  }
+}

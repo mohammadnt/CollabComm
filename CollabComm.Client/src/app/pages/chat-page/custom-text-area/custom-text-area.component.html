@@ -1,0 +1,20 @@
+<div class="position-relative" style="min-height: 20px">
+  <div class="position-absolute inset-0 py-2" style="opacity: 0.4;z-index: 1"
+       *ngIf="isNullOrEmpty(divValue) || disabled" (click)="onPlaceHolderClick()">{{placeholder}}</div>
+
+  <div
+    *ngIf="!disabled"
+    class="py-2 position-relative mydiv w-100 h-100"
+    style="max-height: 100px;cursor: text; overflow-y: overlay;z-index: 2"
+    [ngStyle]="{'min-height': minHeight + 'px'}"
+    contenteditable="true"
+    (input)="onMyDivInput()"
+    (mousedown)="onMyDivMouseDown($event)"
+    (blur)="onblur1($event)"
+    (mouseup)="onMyDivMouseUp($event)"
+    (touchend)="onMyDivTouchEnd($event)"
+    (paste)="onMyDivPaste($event)"
+    (keydown)="onMyDivKeyDown($event)"
+    #mydiv
+  ></div>
+</div>

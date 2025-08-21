@@ -1,0 +1,41 @@
+@import '../shared/variables';
+
+.info {
+  background: #e8eef7;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.profile-pic-wrapper {
+  height: 100%;
+  aspect-ratio: 1/1;
+  background: #9a9a9a;
+  border-radius: 50%;
+}
+
+.menu-div {
+  padding: 8px 8px;
+
+  &.with-seprator {
+    border-bottom: solid 1px #acacac;
+  }
+}
+
+::ng-deep {
+  .no-padding-menu .mat-mdc-menu-content {
+    padding: 0 !important;
+  }
+}
+
+
+.profile-pic-placeholder {
+  font-family: Arial, Roboto, "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+@media only screen and (max-width: $mobile-size) {
+  .profile-pic-placeholder {
+    font-size: 1rem;
+  }
+}

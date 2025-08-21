@@ -1,0 +1,83 @@
+.name-text {
+  font-family: system-ui, BlinkMacSystemFont, "Roboto", "Apple Color Emoji", "Helvetica Neue", sans-serif;
+
+  color: black;
+}
+
+.media-wrapper-item {
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: rgb(121, 103, 211);
+  background: linear-gradient(315deg, rgba(121, 103, 211, 1) 0%, rgba(181, 171, 234, 1) 100%);
+}
+
+.simorq-img {
+  width: 26px;
+  height: 26px;
+}
+.simorq-img-items {
+  width: 20px;
+  height: 20px;
+}
+
+.back-wrapper {
+  color: #999;
+  font-size: 2rem;
+}
+
+nav {
+  .items {
+    //border-top: 1px solid #ebebeb;
+    //border-bottom: 1px solid #ebebeb;
+    min-height: 40px;
+    height: 50px;
+
+    .item {
+      padding-right: 3rem;
+      padding-left: 3rem;
+      color: #999;
+    }
+  }
+}
+
+
+.media-text {
+  color: white;
+  font-size: 1rem;
+}
+
+.name-in-group {
+  color: #40a7e3;
+}
+
+
+.item-wrapper{
+  border-bottom: solid 1px #ededed;
+}
+
+
+.media-wrapper {
+  overflow: hidden;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: rgb(121,103,211);
+  background: linear-gradient(315deg, rgba(121,103,211,1) 0%, rgba(181,171,234,1) 100%);
+}
+
+.full-name{
+  font-size: 0.8rem;
+}
+
+.media-text{
+  color: white;
+  font-size: 1rem;
+}
+
+.close-btn{
+  font-size: 1.2rem;
+}

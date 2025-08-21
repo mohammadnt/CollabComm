@@ -1,0 +1,28 @@
+.wrapper{
+  padding: 24px;
+  background: white;
+  border-radius: 16px;
+}
+
+
+::ng-deep {
+  .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+    opacity: 1;
+  }
+
+
+  .mat-dialog-container {
+    padding: 0px;
+    box-shadow: unset;
+  }
+
+  .mat-dialog-container {
+    background: rgba(0,0,0,0) !important;
+  }
+
+}
+.progress-wrapper{
+
+  width: 44px;
+  height: 44px;
+}

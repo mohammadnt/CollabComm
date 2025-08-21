@@ -1,0 +1,23 @@
+
+.svg-appendix {
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  //width: 0.5625rem;
+  height: 1.125rem;
+  font-size: 1rem !important;
+}
+
+.incoming {
+  &.svg-appendix {
+    left: -0.05rem;
+    fill: #fff;
+  }
+}
+
+.outgoing {
+  &.svg-appendix {
+    right: -0.05rem;
+    fill: #d6f7bf;
+  }
+}

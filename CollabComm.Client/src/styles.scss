@@ -1,0 +1,433 @@
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+}@import './app/shared/variables';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+html, body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100%;
+  font-family: San Francisco, Arial, Roboto, "Helvetica Neue", sans-serif !important;
+  font-weight: 300;
+}
+
+body {
+  background-color: $body-background;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    top: 0px;
+    opacity: 0;
+  }
+  to {
+    top: 200px;
+    opacity: 1;
+  }
+}
+
+// Simple
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #6D6D6D;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 0, 0, .9);
+}
+
+.overflow-y-overlay {
+  overflow-y: overlay;
+}
+
+.overflow-x-overlay {
+  overflow-x: overlay;
+}
+
+.overflow-overlay {
+  overflow: overlay;
+}
+
+.app-container, {
+  width: 100%;
+  max-width: 544px !important;
+  --bs-gutter-x: 4rem !important;
+  --bs-gutter-y: 0;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.app-container-fluid {
+  width: 100%;
+  max-width: 544px !important;
+  --bs-gutter-x: 4rem !important;
+  --bs-gutter-y: 0;
+  padding-right: 0;
+  padding-left: 0;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media screen and (max-width: 500px) {
+  .app-container {
+    --bs-gutter-x: 4rem !important;
+    --bs-gutter-y: 0;
+    width: 100% !important;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .app-container-fluid {
+    --bs-gutter-x: 4rem !important;
+    --bs-gutter-y: 0;
+    width: 100% !important;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+}
+
+.infinite-rotate {
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.rtl-toast-class {
+  margin-bottom: 12px;
+  margin-top: 12px;
+  direction: rtl;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  max-width: 260px;
+  background-image: unset !important;
+
+  &.toast-error {
+
+  }
+}
+
+.my-btn {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+
+  border: none;
+  background: none;
+  padding: 0;
+  color: black;
+
+  &.active {
+    font-weight: 500;
+    color: #000;
+    opacity: 1;
+  }
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.my-shadow-xsm {
+  box-shadow: rgba(55, 55, 55, 0.06) 0 0 6px 6px;
+}
+
+.my-shadow-sm {
+  box-shadow: rgba(55, 55, 55, 0.06) 0 0 24px 24px;
+}
+
+.my-shadow-md {
+  box-shadow: #37373714 0 0 4px 4px;
+}
+
+.my-shadow-lg {
+  box-shadow: rgba(0, 0, 0, 0.11) 0 0 8px 1px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.11) 0 0 8px 1px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.11) 0 0 8px 1px;
+}
+
+.my-shadow-xlg {
+  box-shadow: rgba(0, 0, 0, 0.11) 0 0 16px 1px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.11) 0 0 16px 1px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.11) 0 0 16px 1px;
+}
+
+.my-shadow-xlg2 {
+  box-shadow: rgba(0, 0, 0, 0.11) 0 0 24px 24px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.11) 0 0 24px 24px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.11) 0 0 24px 24px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, input, textarea, .mat-radio-button, .mat-select {
+  font-family: Arial, Roboto, "Helvetica Neue", sans-serif;
+}
+
+a {
+  cursor: pointer;
+}
+
+.cursor-move {
+  cursor: move;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.custom-a {
+  color: black;
+
+  &:hover {
+    color: black;
+  }
+}
+
+.custom-dark-a {
+  color: white;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.inset-0 {
+  inset: 0;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.form-group {
+  label.required {
+    &:after {
+      content: '*';
+      color: red;
+      margin-right: -.25rem;
+    }
+  }
+}
+
+b, strong {
+  font-weight: bold !important;
+}
+
+.loader {
+  border-radius: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  will-change: transform;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.loader:before {
+  -webkit-animation-duration: 1.2s !important;
+  animation-duration: 1.2s !important;
+  background-image: linear-gradient(40deg, hsla(0, 0%, 100%, 0), hsla(0, 0%, 100%, .6), hsla(0, 0%, 100%, 0)) !important;
+  //background: red;
+  -webkit-animation: progress 2s ease-in-out infinite;
+  animation: progress 2s ease-in-out infinite;
+  background-size: 200px 100%;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 200px;
+  z-index: 1;
+}
+
+@-webkit-keyframes progress {
+  0% {
+    transform: translate3d(-200px, 0px, 0px);
+  }
+  100% {
+    transform: translate3d(calc(200px + 100vw), 0px, 0px);
+  }
+}
+
+@keyframes progress {
+  0% {
+    transform: translate3d(-200px, 0px, 0px);
+  }
+  100% {
+    transform: translate3d(calc(200px + 100vw), 0px, 0px);
+  }
+}
+
+.multi-line-span {
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  line-height: normal;
+}
+
+.one-line-span {
+  white-space: pre;
+  line-height: normal;
+}
+
+.multi-dir-div {
+  unicode-bidi: plaintext
+}
+
+img.emoji {
+  width: 14px;
+  height: 14px;
+}
+
+.common-twemoji img.emoji {
+  width: var(--img-size);
+  height: var(--img-size);
+}
+
+.action-btn {
+  padding: 4px 8px;
+  background: black;
+  border-radius: 8px;
+  color: white;
+
+  &.submit-btn {
+    padding: 10px 12px;
+  }
+
+  &.disabled {
+    background: gray;
+  }
+}
+
+.min-height-0 {
+  min-height: 0;
+}
+
+.min-width-0 {
+  min-width: 0;
+}
+
+.max-width-100 {
+  max-width: 100px;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.container {
+  --bs-gutter-x: 4rem !important;
+}
+
+.container-fluid {
+  --bs-gutter-x: 0 !important;
+}
+
+.scroll-bar-d-none::-webkit-scrollbar {
+  display: none;
+}
+
+.hidden-input-file {
+  position: absolute;
+  visibility: hidden;
+  top: 0;
+  left: -5000px;
+}
+
+.text-overflow-ellipsis{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+html{
+  --mat-paginator-container-text-font: Arial, Roboto, "Helvetica Neue", sans-serif !important;
+  --mat-paginator-container-text-size:  0.7rem !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,74 @@
+.wrapper {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 32px;
+}
+
+//.container {
+//  --bs-gutter-x: 4rem !important;
+//}
+.notification-title {
+  margin-top: -12px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  text-align: center;
+}
+.notification-text {
+  font-size: 1.2rem;
+  line-height: 1.7rem;
+
+}
+
+.parent{
+  backdrop-filter: blur(4px);
+  height: 100%;
+  width: 100%;
+}
+.dismiss-button1 {
+  margin-top: -8px;
+  padding: 8px 8px;
+  padding-bottom: 0;
+  padding-top: 0;
+  font-size: 1.3rem;
+  border-radius: 16px;
+  color: #7d8182;
+  /* background: #356dfa; */
+
+}
+.dismiss-button2 {
+  padding: 8px 8px;
+  padding-bottom: 0;
+  padding-top: 0;
+  font-size: 1.3rem;
+  border-radius: 16px;
+  color: #7d8182;
+  /* background: #356dfa; */
+
+}
+.ok-button {
+  padding: 8px 16px;
+  border-radius: 12px;
+  color: white;
+  background: #f04c4d;
+}
+
+::ng-deep {
+  .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+    opacity: 0;
+  }
+
+
+  .mat-dialog-container {
+    padding: 0px;
+    box-shadow: unset;
+  }
+
+  .mat-dialog-container {
+    background: rgba(0,0,0,0) !important;
+  }
+
+}
+btn:focus{
+  border: none;
+}

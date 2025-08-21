@@ -1,0 +1,155 @@
+<div class="app-container d-flex flex-column h-100">
+  @if (!isRegister) {
+    <form class="h-100 mt-3 flex-grow-1"
+          [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="form-group">
+            <label for="username">
+              {{ 'Username' }}
+            </label>
+            <div>
+              <input type="text" formControlName="username" id="username" class="form-control"
+                     placeholder="Username"
+                     [ngClass]="{ 'is-invalid': submitted && loginFormData['username'].errors }"/>
+              <div *ngIf="submitted && loginFormData['username'].errors"
+                   class="invalid-feedback">
+                <div class=""
+                     *ngIf="loginForm.getErrorForControl('username', 'required')">
+                  Please enter username.
+                </div>
+              </div>
+            </div>
+            <div class="form-control-comment">
+            </div>
+          </div>
+
+          <div class="form-group pt-2">
+            <label for="password">
+              {{ 'Password' }}
+            </label>
+            <div>
+              <input type="password" formControlName="password" class="form-control"
+                     placeholder="Password" id="password"
+                     [ngClass]="{ 'is-invalid': submitted && loginFormData['password'].errors }"/>
+              <div *ngIf="submitted && loginFormData['password'].errors"
+                   class="invalid-feedback">
+                <div class=""
+                     *ngIf="loginForm.getErrorForControl('password','required')">
+                  Please enter password.
+                </div>
+              </div>
+            </div>
+            <div class="form-control-comment">
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center form-group py-3">
+            <button [disabled]="submitClick" class="my-btn submit-primary" type="submit">
+              Login
+            </button>
+          </div>
+          <div>
+            <div *ngIf="loginError" class="alert alert-danger">{{ loginError }}</div>
+          </div>
+    </form>
+
+    <div class="align-self-stretch d-flex justify-content-center mb-5">
+      <button class="my-btn" (click)="onSwitchToRegister()">Register</button>
+    </div>
+  } @else {
+    <form class="h-100 consultation-form mt-3 flex-grow-1" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+          <div class="form-group">
+            <label>
+              {{ 'Username' }}
+            </label>
+            <div>
+              <input type="text" formControlName="username" class="form-control"
+                     placeholder="Username"
+                     [ngClass]="{ 'is-invalid': submitted && registerFormData['username'].errors }"/>
+              <div *ngIf="submitted && registerFormData['username'].errors"
+                   class="invalid-feedback">
+                <div class=""
+                     *ngIf="registerForm.getErrorForControl('username', 'required')">
+                  Please enter username.
+                </div>
+              </div>
+            </div>
+            <div class="form-control-comment">
+            </div>
+          </div>
+
+          <div class="form-group pt-2">
+            <label>
+              {{ 'Password' }}
+            </label>
+            <div>
+              <input type="password" formControlName="password" class="form-control"
+                     placeholder="Password"
+                     [ngClass]="{ 'is-invalid': submitted && registerFormData['password'].errors }"/>
+              <div *ngIf="submitted && registerFormData['password'].errors"
+                   class="invalid-feedback">
+                <div class=""
+                     *ngIf="registerForm.getErrorForControl('password','required')">
+                  Please enter password.
+                </div>
+              </div>
+            </div>
+            <div class="form-control-comment">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>
+              {{ 'First Name' }}
+            </label>
+            <div>
+              <input type="text" formControlName="first_name" class="form-control"
+                     placeholder="First Name"
+                     [ngClass]="{ 'is-invalid': submitted && registerFormData['first_name'].errors }"/>
+              <div *ngIf="submitted && registerFormData['first_name'].errors"
+                   class="invalid-feedback">
+                <div class=""
+                     *ngIf="registerForm.getErrorForControl('first_name', 'required')">
+                  Please enter first name.
+                </div>
+              </div>
+            </div>
+            <div class="form-control-comment">
+            </div>
+          </div>
+
+          <div class="form-group pt-2">
+            <label>
+              {{ 'Last Name' }}
+            </label>
+            <div>
+              <input type="text" formControlName="last_name" class="form-control"
+                     placeholder="Last Name"
+                     [ngClass]="{ 'is-invalid': submitted && registerFormData['last_name'].errors }"/>
+              <div *ngIf="submitted && registerFormData['last_name'].errors"
+                   class="invalid-feedback">
+                <div class=""
+                     *ngIf="registerForm.getErrorForControl('last_name','required')">
+                  Please enter last name.
+                </div>
+              </div>
+            </div>
+            <div class="form-control-comment">
+            </div>
+          </div>
+
+          <div class="d-flex form-group justify-content-center py-3">
+            <button [disabled]="submitClick" class="my-btn submit-primary" type="submit">
+              Register
+            </button>
+          </div>
+          <div>
+            <div *ngIf="registerError" class="alert alert-danger">{{ registerError }}</div>
+          </div>
+    </form>
+    <div class="align-self-stretch d-flex justify-content-center mb-5">
+      <button class="my-btn" (click)="onSwitchToLogin()">Login</button>
+    </div>
+  }
+</div>
+
+

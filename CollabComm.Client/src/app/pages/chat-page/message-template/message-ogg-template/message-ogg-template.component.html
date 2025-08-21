@@ -1,0 +1,74 @@
+<div class="wrapper">
+  <div class="d-flex align-items-center" *ngIf="!!message?.fakeData">
+    <button class="play-btn position-relative"
+            [ngClass]="{'incoming' : !message?.is_sender , 'outgoing' : message?.is_sender}"
+            (click)="onPlayBtn()">
+      <div class="infinite-rotate" style="margin: -4px;">
+        <round-progress
+          [current]="message?.fakeData?.uploadRatio ?? 0"
+          [max]="1"
+          [color]="'white'"
+          [background]="'transparent'"
+          [radius]="200"
+          [stroke]="20"
+          [semicircle]="false"
+          [rounded]="true"
+          [clockwise]="true"
+          [responsive]="true"
+          [duration]="800"
+          [animation]="'easeInOutQuart'"
+          [animationDelay]="0"
+          (onRender)="onRender($event)"></round-progress>
+      </div>
+      <div class="upload-percent">
+        {{((message?.fakeData?.uploadRatio ?? 0) * 100).noFractionDigit()}}<span style="font-size: 0.5rem"> %</span>
+      </div>
+    </button>
+
+    <div class="flex-grow-1 ms-2 slider-wrapper">
+      <div class="waveform mt-2 mb-1" style="width: 80px;height: 16px; " #waveSurfer>
+      </div>
+      <div class="time-wrapper d-flex justify-content-between">
+        <div class="fw-bold">00:00</div>
+        <div class="fw-bold">00:00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center" *ngIf="message?.media_id">
+    <audio class="d-none" [attr.src]="getMediaSrc()" #audio
+           (loadedmetadata)="loadedmetadata($event)">
+    </audio>
+    <button class="play-btn" [ngClass]="{'incoming' : !message?.is_sender , 'outgoing' : message?.is_sender}"
+            (click)="onPlayBtn()">
+      <ng-container *ngIf="!isLoaded">
+        <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faArrowDown" *ngIf="!isDownloading"/>
+        <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faSpinner" *ngIf="isDownloading"/>
+      </ng-container>
+
+      <ng-container *ngIf="isLoaded">
+        <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faPlay" *ngIf="!isVoicePlaying"/>
+        <fa-icon class="d-flex justify-content-center align-items-center" [icon]="faPause" *ngIf="isVoicePlaying"/>
+      </ng-container>
+    </button>
+    <div class="flex-grow-1 ms-2 slider-wrapper">
+<!--      <input classes="slider w-100" type="range" id="seek-slider" [step]="0.01" [min]="0" [max]="audio.duration"-->
+<!--             (mouseup)="onSliderMouseUp($event)" (mousedown)="onSliderMouseDown($event)"-->
+<!--             (touchstart)="touchstart($event)" (touchcancel)="touchcancel($event)" (touchend)="touchend($event)"-->
+<!--             (change)="onSliderChange($event)"-->
+<!--             [ngClass]="{'incoming' : !message?.is_sender , 'outgoing' : message?.is_sender}"-->
+<!--             value="0" #inputRange>-->
+      <div id="waveform" class="mt-2 mb-1" style="width: 80px;height: 16px; " #waveSurfer>
+      </div>
+      <div class="time-wrapper d-flex justify-content-between">
+        <div class="fw-bold">{{currentTimeString === '' ? calculateTime(0) : currentTimeString}}</div>
+        <div class="fw-bold">{{fileData?.duration ?? audioDuration}}</div>
+      </div>
+    </div>
+  </div>
+
+  <span class="d-inline" [ngStyle]="{'width': 'calc(100% - ' + 0 + 'px - 1px)'}"
+        style="text-align: right">
+        <app-message-status-wrapper [message]="message" [conversation]="conversation"></app-message-status-wrapper>
+  </span>
+</div>

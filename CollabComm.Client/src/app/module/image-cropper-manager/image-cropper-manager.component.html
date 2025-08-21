@@ -1,0 +1,19 @@
+<div class="parent d-flex justify-content-center" (click)="onParentClick($event)">
+  <div class="d-flex justify-content-center align-items-center h-100">
+    <div class="w-100 h-100 d-flex justify-content-center align-items-center position-relatives">
+
+        <image-cropper
+          [imageFile]="imageFile"
+          [maintainAspectRatio]="aspectRatio !== -1"
+          [aspectRatio]="aspectRatio"
+          [format]="'jpeg'"
+          (imageCropped)="imageCropped($event)"
+        ></image-cropper>
+        <button class="my-btn check-wrapper" (click)="onSubmitBtn()">
+          <i class="fa-solid fa-check icon-btn"></i>
+        </button>
+      <button class="my-btn x-mark-wrapper p-2" (click)="onDone()"><i class="fa-solid fa-xmark icon-btn"></i></button>
+
+    </div>
+  </div>
+</div>

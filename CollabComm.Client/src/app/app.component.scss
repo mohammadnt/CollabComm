@@ -1,0 +1,35 @@
+::ng-deep {
+  .container-div {
+    overflow-y: overlay;
+  }
+
+  .my-h100 {
+    height: calc(100% - 68px - 0.25rem - 67px);
+  }
+
+  .my-h100-titled {
+    height: calc(100% - 94.8px - 4px)
+  }
+
+  .pure-h-100 {
+    height: calc(100% - 0px);
+  }
+
+  .pb60 {
+    //padding-bottom: 74px;
+  }
+
+  .h60 {
+    height: 78px;
+  }
+
+
+}
+
+.main-first-wrapper {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}

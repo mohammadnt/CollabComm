@@ -1,0 +1,39 @@
+<div class="position-relative w-100"
+     style="unicode-bidi: bidi-override;">
+
+
+  <app-custom-text-area
+    (onTextSelectedChanged)="onTextSelectedChanged($event)"
+    (focusin)="onTextAreaFocusIn()"
+    [placeholder]="placeholder ?? ''"
+    class="w-100 "
+    style="font-size: 0.85rem;"
+    [minHeight]="minHeight"
+    #customMessageTextArea
+    *ngIf="true"
+    [disabled]="disabled"
+    [(value)]="value">
+  </app-custom-text-area>
+
+
+  <textarea [disabled]="disabled ?? false"
+            (click)="onTextAreaFocusIn()"
+            placeholder="{{placeholder}}"
+            class="chat-textarea w-100"
+            style="font-size: 0.85rem;"
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+            dir="auto"
+            #messageTextArea
+            [(ngModel)]="textModel"
+            *ngIf="false">
+          </textarea>
+
+<!--  <div classes="tooltip-overlay" (click)="isTextSelected = false" *ngIf="isTextSelected"></div>-->
+
+  <div class="text-area-buttons d-flex gap-1 align-items-stretch" *ngIf="isTextSelected">
+    <button class="my-btn cursor-pointer px-2 text-area-button" (click)="onBoldBtn()" (mousedown)="fakemousedown()" (touchstart)="faketouchstart()">{{isInBold ? 'Unbold' : 'Bold'}}</button>
+  </div>
+</div>
