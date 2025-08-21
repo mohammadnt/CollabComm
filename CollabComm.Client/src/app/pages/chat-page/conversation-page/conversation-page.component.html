@@ -2,22 +2,28 @@
 
   <h3 class="view-title">Chats</h3>
   <div class="d-flex buttons-wrapper mb-2">
-    <button class="order-2 tab-button text-center py-2"
-            matButton
-            [ngClass]="{'active' : isGroupChatOnly}" (click)="setGroupChatOnly(true)">
-      <div>Groups</div>
+    <div class="order-2 position-relative">
+      <button class="tab-button text-center py-2"
+              matButton
+              [ngClass]="{'active' : isGroupChatOnly}" (click)="setGroupChatOnly(true)">
+        <div>Groups</div>
+      </button>
+
       <div class="badge" *ngIf="groupsUnreadCount > 0">
         {{ groupsUnreadCount }}
       </div>
-    </button>
-    <button class="order-1 tab-button text-center py-2"
-            matButton
-            [ngClass]="{'active' : !isGroupChatOnly}" (click)="setGroupChatOnly(false)">
-      <div>Users</div>
+    </div>
+    <div class="order-1 position-relative">
+      <button class="tab-button text-center py-2"
+              matButton
+              [ngClass]="{'active' : !isGroupChatOnly}" (click)="setGroupChatOnly(false)">
+        <div>Users</div>
+      </button>
+
       <div class="badge" *ngIf="usersUnreadCount > 0">
         {{ usersUnreadCount }}
       </div>
-    </button>
+    </div>
   </div>
 
   <div class="chat-list flex-grow-1 overflow-y-overlay" (scroll)="onScroll()" #scrollWrapperDiv>

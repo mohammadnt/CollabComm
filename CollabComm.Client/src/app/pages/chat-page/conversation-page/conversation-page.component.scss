@@ -30,24 +30,6 @@ input {
     color: rgba(0, 0, 0, 0.4);
     font-weight: 400;
 
-    .badge {
-      position: absolute;
-      right: 0;
-      top: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      font-size: 0.68rem;
-      padding: 0 5px;
-      min-width: 16px;
-      line-height: 16px;
-      height: 16px;
-      color: white;
-      background: red;
-      border-radius: 8px;
-    }
-
     &.active {
       font-weight: 500;
       color: #000;
@@ -57,6 +39,24 @@ input {
     &.focus {
       background-color: transparent;
     }
+  }
+
+  .badge {
+    position: absolute;
+    right: 6px;
+    top: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 0.68rem;
+    padding: 0 5px;
+    min-width: 16px;
+    line-height: 16px;
+    height: 16px;
+    color: white;
+    background: red;
+    border-radius: 8px;
   }
 }
 
@@ -187,7 +187,7 @@ input {
   padding: 0 4px;
 }
 
-.contact-btn{
+.contact-btn {
   position: absolute;
   bottom: 16px;
   right: 16px;
