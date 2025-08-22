@@ -57,5 +57,22 @@ public class DatabaseContext : IdentityDbContext
         modelBuilder.Entity<PublicUserMedia>()
             .Property(e => e.creation_date)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+        modelBuilder.Entity<CollabUser>()
+            .HasIndex(s => new { s.username });
+        modelBuilder.Entity<Contact>()
+            .HasIndex(s => new { s.user_id, s.deleted, s.target_id });
+        modelBuilder.Entity<Conversation>()
+            .HasIndex(s => new { s.deleted, s.from_id, s.to_id });
+        modelBuilder.Entity<PublicUserMedia>()
+            .HasIndex(s => new { s.user_id });
+        modelBuilder.Entity<Session>()
+            .HasIndex(s => new { s.user_id, s.deleted, s.last_online_date });
+        modelBuilder.Entity<Session>()
+            .HasIndex(s => new { s.device_id });
+        modelBuilder.Entity<UserGroup>()
+            .HasIndex(s => new { s.user_id, s.deleted, s.group_id });
+        modelBuilder.Entity<UserRole>()
+            .HasIndex(s => new { s.user_id });
     }
 }
