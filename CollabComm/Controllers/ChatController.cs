@@ -368,7 +368,7 @@ public class ChatController : BaseController
         CancellationToken cancellationToken = default)
     {
         var user = await _userService.GetUser(request.title, cancellationToken);
-        if (user == null)
+        if (user == null || user.type == (int)UserType.Group)
             return new ResultSet<object>() { code = ResponseCodes.WrongArgument };
         var oldContact = await _chatService.GetContact(App.UserIdGuid, user.id, cancellationToken);
         if (oldContact != null)
