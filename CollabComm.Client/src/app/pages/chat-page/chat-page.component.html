@@ -15,11 +15,9 @@
                  *ngIf="targetUser?.media_id">
           </div>
       </div>
-      <div (click)="goToProfile()">
+      <div class="cursor-pointer" (click)="goToProfile()">
         <div class="ms-2 name-text fw-bold">
           <b>{{ getTargetFirstName() }}</b></div>
-        <div class="ms-2 chat-with-mates" *ngIf="targetUser?.type === UserType.group">Click and Chat with Classmates
-        </div>
       </div>
     </div>
   </div>
