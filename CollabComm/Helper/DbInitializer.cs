@@ -1,7 +1,6 @@
 ﻿using CollabComm.InterComm.Repositories;
-using Microsoft.AspNetCore.Builder;
+using CollabComm.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CollabComm.InterComm;
 
@@ -30,6 +29,9 @@ public static class DbInitializer
                     context.Database.Migrate();
                 }
             }
+
+            var mongoService = serviceScope.ServiceProvider.GetService<IMongoService>();
+            mongoService.CreateIndexes();
         }
     }
 }
