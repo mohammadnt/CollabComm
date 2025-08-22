@@ -2,8 +2,13 @@
   <div class="d-flex align-items-center justify-content-between pt-2">
     <h3 class="view-title">Your Classmates</h3>
     <div>
-      <fa-icon [icon]="faXmark" [routerLink]="'/chat/' + id"/>
+      <fa-icon class="cursor-pointer" [icon]="faXmark" [routerLink]="'/chat/' + id"/>
     </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button class="my-btn add-members-btn py-2 px-3" matRipple [matRippleColor]="'rgba(0, 0, 0, .14)'" (click)="onAddMembers()">
+      <div>Add Members</div>
+    </button>
   </div>
   <div class="item-wrapper d-flex py-2 align-items-center" *ngFor="let ug of userGroups; let i=index"
        (click)="onItemClick(ug.user)">

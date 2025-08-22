@@ -13,6 +13,9 @@ public interface IChatService
     Task<CollabUser> CreateGroup(Guid userId, string username, string title, List<Guid> userIds,
         CancellationToken cancellationToken);
 
+    Task<bool> AddMembers(Guid userId, Guid groupid, List<Guid> userIds,
+        CancellationToken cancellationToken);
+
     Task AddToGroup(Guid gpid, List<Guid> userIds, CancellationToken cancellationToken);
 
 
@@ -392,6 +395,23 @@ public class ChatService : IChatService
         await ProcessMessage.MakeCreateGroupMessage(_mongoService, _sqlRepository, gpUser.id, userId,
             title, cancellationToken);
         return gpUser;
+    }
+
+    public async Task<bool> AddMembers(Guid userId, Guid groupid, List<Guid> userIds,
+        CancellationToken cancellationToken)
+    {
+        var ug = await _sqlRepository.GetOneByFilter<UserGroup>(s => s.user_id == userId && s.group_id == groupid,
+            cancellationToken);
+        if (ug == null)
+            return false;
+        var currentUgs =
+            (await _sqlRepository.GetByFilter<UserGroup>(s => s.group_id == groupid && userIds.Contains(s.user_id),
+                cancellationToken)).ToList();
+        var newUserIds = userIds.Where(s => !currentUgs.Any(u => u.user_id == s)).ToList();
+        var members = newUserIds.Select(s => UserGroup.Generate(groupid, s, false, false)).ToList();
+        
+        var r = await _sqlRepository.InsertMany(members, cancellationToken);
+        return r;
     }
 
 

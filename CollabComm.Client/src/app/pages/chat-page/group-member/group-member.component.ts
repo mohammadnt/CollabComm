@@ -8,6 +8,8 @@ import {CollabUserInfo} from '../../../models/UserModels';
 import {endpoint} from '../../../core/cookie-utils';
 import {UserType} from '../../../models/enums';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import {MatDialog} from '@angular/material/dialog';
+import {AddMembersDialogComponent} from './add-members-dialog/add-members-dialog.component';
 
 
 @Component({
@@ -17,14 +19,17 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
   standalone: false
 })
 export class GroupMemberComponent extends BaseComponent implements OnInit, OnDestroy {
+  protected readonly faXmark = faXmark;
+  protected readonly UserType = UserType;
+
   userGroups: UserGroupInfo[] | undefined;
 
   id: string | null = null;
-  onBackBtn = new EventEmitter<boolean>();
   private startTime!: number;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
+              private dialog: MatDialog,
   ) {
     super();
   }
@@ -35,6 +40,10 @@ export class GroupMemberComponent extends BaseComponent implements OnInit, OnDes
 
   override ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.refresh();
+
+  }
+  refresh(){
     this.baseRestService.groupMembers(this.id)
       .pipe(first())
       .subscribe((d: BaseResult<UserGroupInfo[]>) => {
@@ -42,9 +51,7 @@ export class GroupMemberComponent extends BaseComponent implements OnInit, OnDes
         },
         error => {
         });
-
   }
-
 
   onItemClick(user: CollabUserInfo) {
     this.router.navigate([`/chat/${user.id}`]);
@@ -63,11 +70,17 @@ export class GroupMemberComponent extends BaseComponent implements OnInit, OnDes
     return `${endpoint()}media/publicusermedia/${user?.media_id}`;
   }
 
-  protected readonly UserType = UserType;
-
-  onClose() {
-    this.router.navigate([`/chat/${this.id}`]);
+  onAddMembers() {
+    const viewer = this.dialog.open(AddMembersDialogComponent, {
+      data: {groupId: this.id},
+      height: '100vh',
+      width: '100vw',
+      maxWidth: '100vw',
+    });
+    viewer.afterClosed().subscribe(async (result: any) => {
+      if (result) {
+        this.refresh();
+      }
+    });
   }
-
-  protected readonly faXmark = faXmark;
 }

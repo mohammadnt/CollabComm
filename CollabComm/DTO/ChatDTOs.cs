@@ -36,6 +36,12 @@ public class CreateGroupRequestDTO
     public List<Guid> user_ids { get; set; }
 }
 
+public class AddMembersRequestDTO
+{
+    public Guid group_id { get; set; }
+    public List<Guid> user_ids { get; set; }
+}
+
 public class AddChatMediaRequestDTO
 {
     public int type { get; set; }

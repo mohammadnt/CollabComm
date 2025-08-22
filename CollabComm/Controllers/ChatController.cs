@@ -362,6 +362,18 @@ public class ChatController : BaseController
         return new ResultSet<object>(new { user });
     }
 
+    [HttpPost]
+    public async Task<ResultSet<object>> AddMembers([FromBody] AddMembersRequestDTO request,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await _userService.GetUser(request.group_id, cancellationToken);
+        if (user == null)
+            return new ResultSet<object>() { code = ResponseCodes.WrongArgument };
+        var r = await _chatService.AddMembers(App.UserIdGuid, request.group_id, request.user_ids,
+            cancellationToken);
+        return new ResultSet<object>(r);
+    }
+
 
     [HttpPost]
     public async Task<ResultSet<object>> AddContact([FromBody] TitleTitleRequestDTO request,
