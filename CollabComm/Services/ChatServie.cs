@@ -325,6 +325,7 @@ public class ChatService : IChatService
         var x = (from ug in _dbContext.user_group
             join u in _dbContext.collab_user on ug.user_id equals u.id
             where ug.group_id == groupId && u.deleted == false && ug.deleted == false
+            orderby u.first_name + " " + u.last_name
             select new { ug, u }).ToList();
         var q = x.Select(s => _mapper.Map<UserGroupInfo>(s.ug)
             .SetUser(_mapper.Map<CollabUserInfo>(s.u))
