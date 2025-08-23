@@ -1,0 +1,44 @@
+services:
+  postgres-db:
+    image: postgres:16
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=collabpass
+      - POSTGRES_DB=collab_comm
+    networks:
+      - collabcomm-network
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  mongo-db:
+    image: mongo:7.0
+    container_name: mongo-db
+    networks:
+      - collabcomm-network
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+
+  app:
+    image: mohammadnt/collabcomm:latest
+    container_name: app
+    environment:
+      - POSTGRESQL_CONNECTION_STRING=Server=postgres-db;Port=5432;Database=collab_comm;User Id=postgres;Password=collabpass;Application Name=CollabComm;
+      - MONGO_URL=mongodb://mongo-db:27017
+      - MONGO_DB=CollabComm
+    networks:
+      - collabcomm-network
+    ports:
+      - 8080:8080
+
+networks:
+  collabcomm-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  mongodata:
